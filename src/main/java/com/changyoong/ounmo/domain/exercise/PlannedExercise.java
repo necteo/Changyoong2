@@ -23,4 +23,12 @@ public class PlannedExercise {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PLAN_ID")
     private ExercisePlan plan;
+
+    public static PlannedExercise create(Exercise exercise, Long sets, Long count) {
+        PlannedExercise plannedExercise = new PlannedExercise();
+        plannedExercise.setExercise(exercise);
+        plannedExercise.setSets(sets);
+        plannedExercise.setCount(count);
+        return plannedExercise;
+    }
 }

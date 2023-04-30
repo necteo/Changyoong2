@@ -30,7 +30,7 @@ public class Exercise {
     @OneToOne(mappedBy = "exercise")
     private ConductExerciseRecord conductExerciseRecord;
 
-    public void addExerciseParts(ExercisePart exercisePart) {
+    public void addExercisePart(ExercisePart exercisePart) {
         parts.add(exercisePart);
         exercisePart.setExercise(this);
     }
@@ -42,7 +42,7 @@ public class Exercise {
         exercise.setEquipment(equipment);
         exercise.setImg(img);
         exercise.setInfo(info);
-        exerciseParts.forEach(exercise::addExerciseParts);
+        exerciseParts.forEach(exercise::addExercisePart);
         return exercise;
     }
 }

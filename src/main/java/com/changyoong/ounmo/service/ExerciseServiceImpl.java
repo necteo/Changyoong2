@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -24,10 +25,25 @@ public class ExerciseServiceImpl implements ExerciseService {
         return exerciseRepository.findById(exerciseId).orElseThrow();
     }
 
-    public Long createExercise(String name, Boolean equipment, String img, String info, ExercisePartName... partName) {
+    @Override
+    public List<Exercise> findExercisesByPartName(ExercisePartName partName) {
+        List<Exercise> exercises = new ArrayList<>();
+        List<ExercisePart> findExerciseParts = exercisePartRepository.findAllByPartName(partName);
+        if (findExerciseParts == null) throw new IllegalArgumentException("exercise parts doesn't exist");
+        findExerciseParts.forEach(part -> {
+            exercises.add(exerciseRepository.findById(part.getExercise().getId())
+                    .orElseThrow(() -> new IllegalArgumentException("exercise doesn't exist")));
+        });
+
+        return exercises;
+    }
+
+    @Override
+    public Long saveExercise(String name, Boolean equipment, String img, String info,
+                             ExercisePartName... partNames) {
         List<ExercisePart> exerciseParts = new ArrayList<>();
-        for (ExercisePartName n : partName) {
-            exerciseParts.add(ExercisePart.createExercisePart(n));
+        for (ExercisePartName partName : partNames) {
+            exerciseParts.add(ExercisePart.createExercisePart(partName));
         }
         Exercise exercise = Exercise.createExercise(name, equipment, img, info, exerciseParts);
         exerciseRepository.save(exercise);

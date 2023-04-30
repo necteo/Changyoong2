@@ -19,15 +19,15 @@ public class ExercisePart {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private ExercisePartName name;
+    private ExercisePartName partName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "EX_ID")
     private Exercise exercise;
 
-    public static ExercisePart createExercisePart(ExercisePartName name) {
-        ExercisePart exercisePart = new ExercisePart();
-        exercisePart.setName(name);
+    public static ExercisePart createExercisePart(ExercisePartName partName) {
+            ExercisePart exercisePart = new ExercisePart();
+            exercisePart.setPartName(partName);
         return exercisePart;
     }
 }

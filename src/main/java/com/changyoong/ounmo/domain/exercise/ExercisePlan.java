@@ -34,4 +34,24 @@ public class ExercisePlan {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "RECORD_ID")
     private ExerciseRecord record;
+
+    public void setUser(User user) {
+        this.user = user;
+        user.getPlans().add(this);
+    }
+
+    public void addPlannedExercise(PlannedExercise plannedExercise) {
+        this.plannedExercises.add(plannedExercise);
+        plannedExercise.setPlan(this);
+    }
+
+    public static ExercisePlan createPlan(User user, List<PlannedExercise> plannedExercises, LocalDateTime startTime, LocalDateTime endTime, String details) {
+        ExercisePlan exercisePlan = new ExercisePlan();
+        exercisePlan.setStartTime(startTime);
+        exercisePlan.setEndTime(endTime);
+        exercisePlan.setDetails(details);
+        exercisePlan.setUser(user);
+        plannedExercises.forEach(exercisePlan::addPlannedExercise);
+        return exercisePlan;
+    }
 }
