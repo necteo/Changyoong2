@@ -1,6 +1,10 @@
 package com.changyoong.ounmo.domain.exercise;
 
 import com.changyoong.ounmo.domain.user.User;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +23,13 @@ public class ExercisePlan {
     private Long id;
 
 //    private LocalDate Date;
+
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDateTime startTime;
+
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDateTime endTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -29,7 +39,7 @@ public class ExercisePlan {
     private String details;
 
     @OneToMany(mappedBy = "plan")
-    private List<PlannedExercise> plannedExercises = new ArrayList<PlannedExercise>();
+    private List<PlannedExercise> plannedExercises = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "RECORD_ID")

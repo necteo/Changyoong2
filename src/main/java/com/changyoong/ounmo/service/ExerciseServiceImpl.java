@@ -21,6 +21,11 @@ public class ExerciseServiceImpl implements ExerciseService {
     private final ExercisePartRepository exercisePartRepository;
 
     @Override
+    public List<Exercise> findAll() {
+        return exerciseRepository.findAll();
+    }
+
+    @Override
     public Exercise findExerciseById(Long exerciseId) {
         return exerciseRepository.findById(exerciseId).orElseThrow();
     }

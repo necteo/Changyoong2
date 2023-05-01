@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -29,7 +28,7 @@ class ExercisePlanServiceTest {
 
     @Test
     void recommendExercise() {
-        Long exerciseId = exerciseService.saveExercise("푸쉬업", false,
+        exerciseService.saveExercise("푸쉬업", false,
                 "http://localhost:80/images/push-up.jpg", "대충 방법과 주의사항",
                 ExercisePartName.ARM, ExercisePartName.CHEST);
 
@@ -74,6 +73,7 @@ class ExercisePlanServiceTest {
         plannedExerciseDataList.add(new PlannedExerciseData(exerciseId, 3L, 10L));
         plannedExerciseDataList.add(new PlannedExerciseData(exerciseId2, 2L, 5L));
         Long savePlan = exercisePlanService.savePlan(userNum, plannedExerciseDataList, startTime, endTime, details);
+
 
         assertThat(savePlan)
                 .as("저장한 계획과 조회한 계획은 같아야 함")

@@ -21,7 +21,6 @@ class ExerciseServiceTest {
     ExerciseService exerciseService;
 
     @Test
-    @AfterEach
     void findExercisesByPartName() throws Exception {
         List<Exercise> exercisesByPartName = exerciseService.findExercisesByPartName(ExercisePartName.CHEST);
 
@@ -42,9 +41,18 @@ class ExerciseServiceTest {
                 .as("저장한 운동과 조회된 운동이 같아야 함")
                 .isEqualTo(exerciseId);
 
-        exerciseId = exerciseService.saveExercise("턱걸이", false,
+        exerciseService.saveExercise("턱걸이", false,
                 "http://localhost:80/images/pull-up.jpg", "대충 방법과 주의사항",
                 ExercisePartName.BACK, ExercisePartName.ARM,
                 ExercisePartName.CHEST, ExercisePartName.SHOULDER);
+    }
+
+    @Test
+    @AfterEach
+    void findAll() {
+        List<Exercise> all = exerciseService.findAll();
+        assertThat(all.size())
+                .as("크기가 같아야함 ")
+                .isEqualTo(2);
     }
 }
