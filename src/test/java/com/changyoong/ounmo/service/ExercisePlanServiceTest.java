@@ -2,6 +2,7 @@ package com.changyoong.ounmo.service;
 
 import com.changyoong.ounmo.domain.exercise.Exercise;
 import com.changyoong.ounmo.domain.exercise.ExercisePartName;
+import com.changyoong.ounmo.domain.exercise.ExercisePlanDTO;
 import com.changyoong.ounmo.domain.exercise.PlannedExerciseData;
 import com.changyoong.ounmo.domain.user.User;
 import org.junit.jupiter.api.*;
@@ -72,7 +73,8 @@ class ExercisePlanServiceTest {
         List<PlannedExerciseData> plannedExerciseDataList = new ArrayList<>();
         plannedExerciseDataList.add(new PlannedExerciseData(exerciseId, 3L, 10L));
         plannedExerciseDataList.add(new PlannedExerciseData(exerciseId2, 2L, 5L));
-        Long savePlan = exercisePlanService.savePlan(userNum, plannedExerciseDataList, startTime, endTime, details);
+        ExercisePlanDTO planDTO = new ExercisePlanDTO(userNum, plannedExerciseDataList, startTime, endTime, details);
+        Long savePlan = exercisePlanService.savePlan(planDTO);
 
 
         assertThat(savePlan)

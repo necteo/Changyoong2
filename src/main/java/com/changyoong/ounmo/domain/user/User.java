@@ -2,10 +2,6 @@ package com.changyoong.ounmo.domain.user;
 
 import com.changyoong.ounmo.domain.exercise.ExercisePlan;
 import com.changyoong.ounmo.domain.exercise.ExerciseRecord;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,8 +22,6 @@ public class User {
     private String id;
     private String pw;
 
-    @JsonSerialize(using = LocalDateSerializer.class)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate birth;
 
     private String name;

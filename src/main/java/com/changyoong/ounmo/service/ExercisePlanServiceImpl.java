@@ -32,19 +32,19 @@ public class ExercisePlanServiceImpl implements ExercisePlanService {
     }
 
     @Override
-    public Long savePlan(Long userNum, List<PlannedExerciseData> plannedExerciseDataList,
-                         LocalDateTime startTime, LocalDateTime endTime, String details) {
-        User user = userRepository.findByNum(userNum)
+    public Long savePlan(ExercisePlanDTO planDTO) {
+        User user = userRepository.findByNum(planDTO.getUserNum())
                 .orElseThrow(() -> new IllegalArgumentException("user doesn't exist"));
 
         List<PlannedExercise> plannedExercises = new ArrayList<>();
-        for (PlannedExerciseData ped : plannedExerciseDataList) {
+        for (PlannedExerciseData ped : planDTO.getPlannedExerciseDataList()) {
             Exercise exercise = exerciseRepository.findById(ped.getExerciseId())
                     .orElseThrow(() -> new IllegalArgumentException("exercise doesn't exist"));
             plannedExercises.add(PlannedExercise.create(exercise, ped.getSets(), ped.getCount()));
         }
 
-        ExercisePlan exercisePlan = ExercisePlan.createPlan(user, plannedExercises, startTime, endTime, details);
+        ExercisePlan exercisePlan = ExercisePlan.createPlan(user, plannedExercises,
+                planDTO.getStartTime(), planDTO.getEndTime(), planDTO.getDetails());
         exercisePlanRepository.save(exercisePlan);
         plannedExercises.forEach(plannedExerciseRepository::save);
         return exercisePlan.getId();

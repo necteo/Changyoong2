@@ -1,9 +1,6 @@
 package com.changyoong.ounmo.controller;
 
-import com.changyoong.ounmo.domain.exercise.Exercise;
-import com.changyoong.ounmo.domain.exercise.ExercisePartName;
-import com.changyoong.ounmo.domain.exercise.ExercisePlan;
-import com.changyoong.ounmo.domain.exercise.PlannedExerciseData;
+import com.changyoong.ounmo.domain.exercise.*;
 import com.changyoong.ounmo.service.ExercisePlanService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -30,13 +27,12 @@ public class ExercisePlanController {
     }
 
     @PostMapping("/save")
-    public Long savePlan(@RequestBody Long userNum, List<PlannedExerciseData> plannedExerciseDataList,
-                         LocalDateTime startTime, LocalDateTime endTime, String details) {
-        return exercisePlanService.savePlan(userNum, plannedExerciseDataList, startTime, endTime, details);
+    public Long savePlan(@RequestBody ExercisePlanDTO planDTO) {
+        return exercisePlanService.savePlan(planDTO);
     }
 
-    @PostMapping("/add-exercise")
-    public Long addExercise(Long planId, PlannedExerciseData plannedExerciseData) {
+    @PostMapping("/add-exercise/{planId}")
+    public Long addExercise(@PathVariable("planId") Long planId, @RequestBody PlannedExerciseData plannedExerciseData) {
         System.out.println("add one exercise to plan");
         return exercisePlanService.addExercise(planId, plannedExerciseData);
     }
