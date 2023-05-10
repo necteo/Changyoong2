@@ -1,11 +1,12 @@
 package com.changyoong.ounmo.controller;
 
 import com.changyoong.ounmo.domain.exercise.*;
+import com.changyoong.ounmo.dto.ExercisePlanDTO;
+import com.changyoong.ounmo.dto.PlannedExerciseDTO;
 import com.changyoong.ounmo.service.ExercisePlanService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -32,8 +33,8 @@ public class ExercisePlanController {
     }
 
     @PostMapping("/add-exercise/{planId}")
-    public Long addExercise(@PathVariable("planId") Long planId, @RequestBody PlannedExerciseData plannedExerciseData) {
+    public Long addExercise(@PathVariable("planId") Long planId, @RequestBody PlannedExerciseDTO plannedExerciseDTO) {
         System.out.println("add one exercise to plan");
-        return exercisePlanService.addExercise(planId, plannedExerciseData);
+        return exercisePlanService.addExercise(planId, plannedExerciseDTO);
     }
 }

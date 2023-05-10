@@ -2,8 +2,8 @@ package com.changyoong.ounmo.service;
 
 import com.changyoong.ounmo.domain.exercise.Exercise;
 import com.changyoong.ounmo.domain.exercise.ExercisePartName;
-import com.changyoong.ounmo.domain.exercise.ExercisePlanDTO;
-import com.changyoong.ounmo.domain.exercise.PlannedExerciseData;
+import com.changyoong.ounmo.dto.ExercisePlanDTO;
+import com.changyoong.ounmo.dto.PlannedExerciseDTO;
 import com.changyoong.ounmo.domain.user.User;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,10 +70,10 @@ class ExercisePlanServiceTest {
         LocalDateTime startTime = LocalDateTime.of(2023, 4, 30, 20, 0);
         LocalDateTime endTime = LocalDateTime.of(2023, 4, 30, 21, 30);
         String details = "어떤 계획인지 설명";
-        List<PlannedExerciseData> plannedExerciseDataList = new ArrayList<>();
-        plannedExerciseDataList.add(new PlannedExerciseData(exerciseId, 3L, 10L));
-        plannedExerciseDataList.add(new PlannedExerciseData(exerciseId2, 2L, 5L));
-        ExercisePlanDTO planDTO = new ExercisePlanDTO(userNum, plannedExerciseDataList, startTime, endTime, details);
+        List<PlannedExerciseDTO> plannedExerciseDTOList = new ArrayList<>();
+        plannedExerciseDTOList.add(new PlannedExerciseDTO(exerciseId, 3L, 10L));
+        plannedExerciseDTOList.add(new PlannedExerciseDTO(exerciseId2, 2L, 5L));
+        ExercisePlanDTO planDTO = new ExercisePlanDTO(userNum, plannedExerciseDTOList, startTime, endTime, details);
         Long savePlan = exercisePlanService.savePlan(planDTO);
 
 

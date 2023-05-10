@@ -1,4 +1,4 @@
-package com.changyoong.ounmo.domain.exercise;
+package com.changyoong.ounmo.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ExercisePlanDTO {
     private Long userNum;
-    private List<PlannedExerciseData> plannedExerciseDataList;
+    private List<PlannedExerciseDTO> plannedExerciseDTOList;
 
     private LocalDateTime startTime;
 

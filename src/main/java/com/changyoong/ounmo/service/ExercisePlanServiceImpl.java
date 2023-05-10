@@ -2,12 +2,13 @@ package com.changyoong.ounmo.service;
 
 import com.changyoong.ounmo.domain.exercise.*;
 import com.changyoong.ounmo.domain.user.User;
+import com.changyoong.ounmo.dto.ExercisePlanDTO;
+import com.changyoong.ounmo.dto.PlannedExerciseDTO;
 import com.changyoong.ounmo.persistence.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class ExercisePlanServiceImpl implements ExercisePlanService {
                 .orElseThrow(() -> new IllegalArgumentException("user doesn't exist"));
 
         List<PlannedExercise> plannedExercises = new ArrayList<>();
-        for (PlannedExerciseData ped : planDTO.getPlannedExerciseDataList()) {
+        for (PlannedExerciseDTO ped : planDTO.getPlannedExerciseDTOList()) {
             Exercise exercise = exerciseRepository.findById(ped.getExerciseId())
                     .orElseThrow(() -> new IllegalArgumentException("exercise doesn't exist"));
             plannedExercises.add(PlannedExercise.create(exercise, ped.getSets(), ped.getCount()));
@@ -51,7 +52,7 @@ public class ExercisePlanServiceImpl implements ExercisePlanService {
     }
 
     @Override
-    public Long addExercise(Long planId, PlannedExerciseData ped) {
+    public Long addExercise(Long planId, PlannedExerciseDTO ped) {
         ExercisePlan findPlan = exercisePlanRepository.findById(planId)
                 .orElseThrow(() -> new IllegalArgumentException("plan doesn't exist"));
         Exercise exercise = exerciseRepository.findById(ped.getExerciseId())

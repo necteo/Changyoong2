@@ -1,6 +1,6 @@
 package com.changyoong.ounmo.controller;
 
-import com.changyoong.ounmo.domain.user.LoginUser;
+import com.changyoong.ounmo.dto.LoginUserDTO;
 import com.changyoong.ounmo.domain.user.User;
 import com.changyoong.ounmo.service.UserService;
 import lombok.AllArgsConstructor;
@@ -19,8 +19,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginUser loginUser) {
-        System.out.println("Login : " + loginUser.getId());
-        return userService.login(loginUser.getId(), loginUser.getPw());
+    public String login(@RequestBody LoginUserDTO loginUserDTO) {
+        System.out.println("Login : " + loginUserDTO.getId());
+        return userService.login(loginUserDTO.getId(), loginUserDTO.getPw());
     }
 }

@@ -1,6 +1,6 @@
 package com.changyoong.ounmo.controller;
 
-import com.changyoong.ounmo.domain.user.LoginUser;
+import com.changyoong.ounmo.dto.LoginUserDTO;
 import com.changyoong.ounmo.domain.user.User;
 import com.changyoong.ounmo.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -52,10 +52,10 @@ class UserControllerTest {
     @Test
     void login() throws Exception {
         User user = new User(1L, "kim", "kim12", LocalDate.now(), "qwer12", 170, 60, "남자");
-        LoginUser loginUser = new LoginUser("kim12", "qwer12");
+        LoginUserDTO loginUserDTO = new LoginUserDTO("kim12", "qwer12");
 
-        given(userService.login(loginUser.getId(), loginUser.getPw())).willReturn(loginUser.getId());
-        String content = new ObjectMapper().writeValueAsString(loginUser);
+        given(userService.login(loginUserDTO.getId(), loginUserDTO.getPw())).willReturn(loginUserDTO.getId());
+        String content = new ObjectMapper().writeValueAsString(loginUserDTO);
 
         mockMvc.perform(
                         post("/ounmo/login")
@@ -63,7 +63,7 @@ class UserControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_PLAIN))
-                .andExpect(content().string(loginUser.getId()))
+                .andExpect(content().string(loginUserDTO.getId()))
                 .andDo(print());
     }
 }
