@@ -23,7 +23,7 @@ public class ExercisePlanServiceImpl implements ExercisePlanService {
 
     @Override
     public List<ExercisePlan> findAll() {
-        return exercisePlanRepository.findAll();
+        return (List<ExercisePlan>) exercisePlanRepository.findAll();
     }
 
     @Override
@@ -47,7 +47,7 @@ public class ExercisePlanServiceImpl implements ExercisePlanService {
         ExercisePlan exercisePlan = ExercisePlan.createPlan(user, plannedExercises,
                 planDTO.getStartTime(), planDTO.getEndTime(), planDTO.getDetails());
         exercisePlanRepository.save(exercisePlan);
-        plannedExercises.forEach(plannedExerciseRepository::save);
+        plannedExerciseRepository.saveAll(plannedExercises);
         return exercisePlan.getId();
     }
 

@@ -22,7 +22,7 @@ public class ExerciseServiceImpl implements ExerciseService {
 
     @Override
     public List<Exercise> findAll() {
-        return exerciseRepository.findAll();
+        return (List<Exercise>) exerciseRepository.findAll();
     }
 
     @Override
@@ -52,7 +52,7 @@ public class ExerciseServiceImpl implements ExerciseService {
         }
         Exercise exercise = Exercise.createExercise(name, equipment, img, info, exerciseParts);
         exerciseRepository.save(exercise);
-        exerciseParts.forEach(exercisePartRepository::save);
+        exercisePartRepository.saveAll(exerciseParts);
         return exercise.getId();
     }
 }

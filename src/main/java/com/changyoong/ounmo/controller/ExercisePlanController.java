@@ -28,12 +28,12 @@ public class ExercisePlanController {
     }
 
     @PostMapping("/save")
-    public Long savePlan(@RequestBody ExercisePlanDTO planDTO) {
+    public @ResponseBody Long savePlan(@RequestBody ExercisePlanDTO planDTO) {
         return exercisePlanService.savePlan(planDTO);
     }
 
     @PostMapping("/add-exercise/{planId}")
-    public Long addExercise(@PathVariable("planId") Long planId, @RequestBody PlannedExerciseDTO plannedExerciseDTO) {
+    public @ResponseBody Long addExercise(@PathVariable("planId") Long planId, @RequestBody PlannedExerciseDTO plannedExerciseDTO) {
         System.out.println("add one exercise to plan");
         return exercisePlanService.addExercise(planId, plannedExerciseDTO);
     }

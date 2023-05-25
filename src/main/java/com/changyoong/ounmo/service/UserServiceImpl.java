@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     public String login(String userId, String userPw) {
         Optional<User> findUser = userRepository.findUserByIdAndPw(userId, userPw);
         if (findUser.isPresent()) {
-            return findUser.get().getId();
+            return findUser.get().getNum() + findUser.get().getId();
         }
         throw new IllegalStateException("아이디가 존재하지 않거나 비밀번호가 일치하지 않음");
     }
