@@ -40,4 +40,10 @@ public class UserController {
         // ToDo : 마이페이지 조회
         return new User();
     }
+
+    @GetMapping("/delete")
+    public @ResponseBody Long deleteAccount() {
+        // ToDo : 회원삭제
+        return 0L;
+    }
 }

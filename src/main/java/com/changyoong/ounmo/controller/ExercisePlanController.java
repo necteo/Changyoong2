@@ -1,6 +1,7 @@
 package com.changyoong.ounmo.controller;
 
 import com.changyoong.ounmo.domain.exercise.*;
+import com.changyoong.ounmo.dto.ExerciseDTO;
 import com.changyoong.ounmo.dto.ExercisePlanDTO;
 import com.changyoong.ounmo.dto.PlannedExerciseDTO;
 import com.changyoong.ounmo.service.ExercisePlanService;
@@ -16,15 +17,15 @@ public class ExercisePlanController {
     private final ExercisePlanService exercisePlanService;
 
     @PostMapping("/all")
-    public List<ExercisePlan> findAllExercise() {
+    public List<ExercisePlanDTO> findAllExercisePlan() {
         System.out.println("find all plan");
         return exercisePlanService.findAll();
     }
 
     @GetMapping("/recommend")
-    public List<Exercise> recommendExercises(@RequestParam("equipment") Boolean equipment,
-                                             @RequestParam("part-name") String partName) {
-        return exercisePlanService.recommendExercise(equipment, ExercisePartName.valueOf(partName));
+    public List<ExerciseDTO> recommendExercises(@RequestParam("isEquipment") Boolean isEquipment,
+                                                @RequestParam("part-name") String partName) {
+        return exercisePlanService.recommendExercise(isEquipment, ExercisePartName.valueOf(partName));
     }
 
     @PostMapping("/save")
@@ -36,5 +37,15 @@ public class ExercisePlanController {
     public @ResponseBody Long addExercise(@PathVariable("planId") Long planId, @RequestBody PlannedExerciseDTO plannedExerciseDTO) {
         System.out.println("add one exercise to plan");
         return exercisePlanService.addExercise(planId, plannedExerciseDTO);
+    }
+
+    @PostMapping("/modify")
+    public @ResponseBody Long modifyPlan(@RequestBody ExercisePlanDTO planDTO) {
+        return exercisePlanService.modifyPlan(planDTO);
+    }
+
+    @GetMapping("/remove/{planId}")
+    public @ResponseBody Long removePlan(@PathVariable Long planId) {
+        return exercisePlanService.removePlan(planId);
     }
 }

@@ -1,4 +1,4 @@
-package com.changyoong.ounmo.persistence;
+package com.changyoong.ounmo.repository;
 
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.Repository;

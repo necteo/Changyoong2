@@ -1,7 +1,7 @@
 package com.changyoong.ounmo.service;
 
 import com.changyoong.ounmo.domain.user.User;
-import com.changyoong.ounmo.persistence.UserRepository;
+import com.changyoong.ounmo.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

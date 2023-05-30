@@ -3,6 +3,7 @@ package com.changyoong.ounmo.domain.exercise;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.util.function.SupplierUtils;
 
 @Getter
 @Setter
@@ -21,7 +22,17 @@ public class ConductExerciseRecord {
     @JoinColumn(name = "RECORD_ID")
     private ExerciseRecord record;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "EX_ID")
     private Exercise exercise;
+
+    public static ConductExerciseRecord createConductExerciseRecord(Long sets, Long count,
+                                                                    Boolean isExercised, Exercise exercise) {
+        ConductExerciseRecord conductExerciseRecord = new ConductExerciseRecord();
+        conductExerciseRecord.setSets(sets);
+        conductExerciseRecord.setCount(count);
+        conductExerciseRecord.setIsExercised(isExercised);
+        conductExerciseRecord.setExercise(exercise);
+        return conductExerciseRecord;
+    }
 }

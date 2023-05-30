@@ -2,9 +2,12 @@ package com.changyoong.ounmo.service;
 
 import com.changyoong.ounmo.domain.exercise.*;
 import com.changyoong.ounmo.domain.user.User;
+import com.changyoong.ounmo.dto.ExerciseDTO;
 import com.changyoong.ounmo.dto.ExercisePlanDTO;
 import com.changyoong.ounmo.dto.PlannedExerciseDTO;
-import com.changyoong.ounmo.persistence.*;
+import com.changyoong.ounmo.mapper.ExerciseMapper;
+import com.changyoong.ounmo.mapper.ExercisePlanMapper;
+import com.changyoong.ounmo.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,14 +25,16 @@ public class ExercisePlanServiceImpl implements ExercisePlanService {
     private final PlannedExerciseRepository plannedExerciseRepository;
 
     @Override
-    public List<ExercisePlan> findAll() {
-        return (List<ExercisePlan>) exercisePlanRepository.findAll();
+    public List<ExercisePlanDTO> findAll() {
+        List<ExercisePlan> exercisePlans = (List<ExercisePlan>) exercisePlanRepository.findAll();
+        return ExercisePlanMapper.INSTANCE.toExercisePlanDTOList(exercisePlans);
     }
 
     @Override
-    public ExercisePlan findPlanById(Long planId) {
-        return exercisePlanRepository.findById(planId)
+    public ExercisePlanDTO findPlanById(Long planId) {
+        ExercisePlan exercisePlan = exercisePlanRepository.findById(planId)
                 .orElseThrow(() -> new IllegalArgumentException("plan doesn't exist"));
+        return ExercisePlanMapper.INSTANCE.toExercisePlanDTO(exercisePlan);
     }
 
     @Override
@@ -64,7 +69,37 @@ public class ExercisePlanServiceImpl implements ExercisePlanService {
     }
 
     @Override
-    public List<Exercise> recommendExercise(Boolean equipment, ExercisePartName partName) {
-        return exerciseRepository.findAllByEquipmentAndPart(equipment, partName);
+    public List<ExerciseDTO> recommendExercise(Boolean isEquipment, ExercisePartName partName) {
+        List<Exercise> recommendedExercises = exerciseRepository.findAllByEquipmentAndPart(isEquipment, partName);
+        return ExerciseMapper.INSTANCE.toExerciseDTOList(recommendedExercises);
+    }
+
+    @Override
+    public Long modifyPlan(ExercisePlanDTO planDTO) {
+        List<PlannedExercise> plannedExercises = new ArrayList<>();
+        ExercisePlan exercisePlan = exercisePlanRepository.findById(planDTO.getId())
+                .orElseThrow(() -> new IllegalArgumentException("plan doesn't exist"));
+        planDTO.getPlannedExerciseDTOList().forEach(ped -> {
+            PlannedExercise plannedExercise = plannedExerciseRepository.findById(ped.getId())
+                    .orElseThrow(() -> new IllegalArgumentException("plannedExercise doesn't exist"));
+            plannedExercise.setSets(ped.getSets());
+            plannedExercise.setCount(ped.getCount());
+            Exercise newExercise = exerciseRepository.findById(ped.getExerciseId())
+                    .orElseThrow(() -> new IllegalArgumentException("exercise doesn't exist"));
+            plannedExercise.setExercise(newExercise);
+            plannedExercises.add(plannedExercise);
+        });
+        exercisePlan.setStartTime(planDTO.getStartTime());
+        exercisePlan.setEndTime(planDTO.getEndTime());
+        exercisePlan.setDetails(planDTO.getDetails());
+        exercisePlan.setPlannedExercises(plannedExercises);
+        return exercisePlanRepository.findById(planDTO.getId())
+                .orElseThrow(() -> new IllegalArgumentException("plan doesn't exist")).getId();
+    }
+
+    @Override
+    public Long removePlan(Long planId) {
+        exercisePlanRepository.deleteById(planId);
+        return 1L;
     }
 }

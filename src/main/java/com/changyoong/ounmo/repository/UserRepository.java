@@ -1,4 +1,4 @@
-package com.changyoong.ounmo.persistence;
+package com.changyoong.ounmo.repository;
 
 import com.changyoong.ounmo.domain.user.User;
 import org.springframework.data.repository.CrudRepository;

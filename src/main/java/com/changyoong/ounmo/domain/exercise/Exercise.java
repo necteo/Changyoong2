@@ -20,26 +20,26 @@ public class Exercise {
     private Long id;
 
     private String name;
-    private Boolean equipment;
+    private Boolean isEquipment;
     private String img;
     private String info;
 
     @OneToMany(mappedBy = "exercise")
     private List<ExercisePart> parts = new ArrayList<>();
 
-    @OneToOne(mappedBy = "exercise")
-    private ConductExerciseRecord conductExerciseRecord;
+    @OneToMany(mappedBy = "exercise")
+    private List<ConductExerciseRecord> conductExerciseRecords = new ArrayList<>();
 
     public void addExercisePart(ExercisePart exercisePart) {
         parts.add(exercisePart);
         exercisePart.setExercise(this);
     }
 
-    public static Exercise createExercise(String name, Boolean equipment, String img, String info,
+    public static Exercise createExercise(String name, Boolean isEquipment, String img, String info,
                                           List<ExercisePart> exerciseParts) {
         Exercise exercise = new Exercise();
         exercise.setName(name);
-        exercise.setEquipment(equipment);
+        exercise.setIsEquipment(isEquipment);
         exercise.setImg(img);
         exercise.setInfo(info);
         exerciseParts.forEach(exercise::addExercisePart);

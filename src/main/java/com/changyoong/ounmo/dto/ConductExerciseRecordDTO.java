@@ -9,9 +9,10 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PlannedExerciseDTO {
+public class ConductExerciseRecordDTO {
     private Long id;
     private Long sets;
     private Long count;
+    private Boolean isExercised;
     private Long exerciseId;
 }

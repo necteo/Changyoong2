@@ -1,7 +1,7 @@
 package com.changyoong.ounmo.service;
 
-import com.changyoong.ounmo.domain.exercise.Exercise;
 import com.changyoong.ounmo.domain.exercise.ExercisePartName;
+import com.changyoong.ounmo.dto.ExerciseDTO;
 import com.changyoong.ounmo.dto.ExercisePlanDTO;
 import com.changyoong.ounmo.dto.PlannedExerciseDTO;
 import com.changyoong.ounmo.domain.user.User;
@@ -29,16 +29,27 @@ class ExercisePlanServiceTest {
 
     @Test
     void recommendExercise() {
-        exerciseService.saveExercise("푸쉬업", false,
-                "http://localhost:80/images/push-up.jpg", "대충 방법과 주의사항",
-                ExercisePartName.ARM, ExercisePartName.CHEST);
+        ExerciseDTO exerciseDTO = ExerciseDTO.builder()
+                .name("푸쉬업")
+                .isEquipment(false)
+                .img("http://localhost:80/images/push-up.jpg")
+                .info("대충 방법과 주의사항")
+                .parts(new ArrayList<ExercisePartName>(List.of(ExercisePartName.ARM, ExercisePartName.CHEST)))
+                .build();
 
-        Long exerciseId2 = exerciseService.saveExercise("턱걸이", true,
-                "http://localhost:80/images/pull-up.jpg", "대충 방법과 주의사항",
-                ExercisePartName.BACK, ExercisePartName.ARM,
-                ExercisePartName.CHEST, ExercisePartName.SHOULDER);
+        ExerciseDTO exerciseDTO2 = ExerciseDTO.builder()
+                .name("턱걸이")
+                .isEquipment(true)
+                .img("http://localhost:80/images/pull-up.jpg")
+                .info("대충 방법과 주의사항")
+                .parts(new ArrayList<ExercisePartName>(List.of(ExercisePartName.BACK, ExercisePartName.ARM,
+                        ExercisePartName.CHEST, ExercisePartName.SHOULDER)))
+                .build();
 
-        List<Exercise> recommendedExercises =
+        Long exerciseId = exerciseService.saveExercise(exerciseDTO);
+        Long exerciseId2 = exerciseService.saveExercise(exerciseDTO2);
+
+        List<ExerciseDTO> recommendedExercises =
                 exercisePlanService.recommendExercise(true, ExercisePartName.ARM);
 
         recommendedExercises.forEach(exercise -> assertThat(exercise.getId())
@@ -58,27 +69,155 @@ class ExercisePlanServiceTest {
         user.setGender("남자");
         Long userNum = userService.saveUser(user);
 
-        Long exerciseId = exerciseService.saveExercise("푸쉬업", false,
-                "http://localhost:80/images/push-up.jpg", "대충 방법과 주의사항",
-                ExercisePartName.ARM, ExercisePartName.CHEST);
+        ExerciseDTO exerciseDTO = ExerciseDTO.builder()
+                .name("푸쉬업")
+                .isEquipment(false)
+                .img("http://localhost:80/images/push-up.jpg")
+                .info("대충 방법과 주의사항")
+                .parts(new ArrayList<ExercisePartName>(List.of(ExercisePartName.ARM, ExercisePartName.CHEST)))
+                .build();
 
-        Long exerciseId2 = exerciseService.saveExercise("턱걸이", true,
-                "http://localhost:80/images/pull-up.jpg", "대충 방법과 주의사항",
-                ExercisePartName.BACK, ExercisePartName.ARM,
-                ExercisePartName.CHEST, ExercisePartName.SHOULDER);
+        ExerciseDTO exerciseDTO2 = ExerciseDTO.builder()
+                .name("턱걸이")
+                .isEquipment(true)
+                .img("http://localhost:80/images/pull-up.jpg")
+                .info("대충 방법과 주의사항")
+                .parts(new ArrayList<ExercisePartName>(List.of(ExercisePartName.BACK, ExercisePartName.ARM,
+                        ExercisePartName.CHEST, ExercisePartName.SHOULDER)))
+                .build();
+
+        Long exerciseId = exerciseService.saveExercise(exerciseDTO);
+        Long exerciseId2 = exerciseService.saveExercise(exerciseDTO2);
 
         LocalDateTime startTime = LocalDateTime.of(2023, 4, 30, 20, 0);
         LocalDateTime endTime = LocalDateTime.of(2023, 4, 30, 21, 30);
         String details = "어떤 계획인지 설명";
         List<PlannedExerciseDTO> plannedExerciseDTOList = new ArrayList<>();
-        plannedExerciseDTOList.add(new PlannedExerciseDTO(exerciseId, 3L, 10L));
-        plannedExerciseDTOList.add(new PlannedExerciseDTO(exerciseId2, 2L, 5L));
+        plannedExerciseDTOList.add(new PlannedExerciseDTO(1L, 3L, 10L, exerciseId));
+        plannedExerciseDTOList.add(new PlannedExerciseDTO(2L, 2L, 5L, exerciseId2));
         ExercisePlanDTO planDTO = new ExercisePlanDTO(userNum, plannedExerciseDTOList, startTime, endTime, details);
-        Long savePlan = exercisePlanService.savePlan(planDTO);
+        Long savedPlanId = exercisePlanService.savePlan(planDTO);
 
 
-        assertThat(savePlan)
+        assertThat(savedPlanId)
                 .as("저장한 계획과 조회한 계획은 같아야 함")
-                .isEqualTo(exercisePlanService.findPlanById(savePlan).getId());
+                .isEqualTo(exercisePlanService.findPlanById(savedPlanId).getId());
+    }
+
+    @Test
+    void modifyPlan() {
+        User user = new User();
+        user.setName("kim");
+        user.setId("kim12");
+        user.setPw("qwer12");
+        user.setBirth(LocalDate.now());
+        user.setHeight(170);
+        user.setWeight(60);
+        user.setGender("남자");
+        Long userNum = userService.saveUser(user);
+
+        ExerciseDTO exerciseDTO = ExerciseDTO.builder()
+                .name("푸쉬업")
+                .isEquipment(false)
+                .img("http://localhost:80/images/push-up.jpg")
+                .info("대충 방법과 주의사항")
+                .parts(new ArrayList<ExercisePartName>(List.of(ExercisePartName.ARM, ExercisePartName.CHEST)))
+                .build();
+
+        ExerciseDTO exerciseDTO2 = ExerciseDTO.builder()
+                .name("턱걸이")
+                .isEquipment(true)
+                .img("http://localhost:80/images/pull-up.jpg")
+                .info("대충 방법과 주의사항")
+                .parts(new ArrayList<ExercisePartName>(List.of(ExercisePartName.BACK, ExercisePartName.ARM,
+                        ExercisePartName.CHEST, ExercisePartName.SHOULDER)))
+                .build();
+
+        Long exerciseId = exerciseService.saveExercise(exerciseDTO);
+        Long exerciseId2 = exerciseService.saveExercise(exerciseDTO2);
+
+        LocalDateTime startTime = LocalDateTime.of(2023, 4, 30, 20, 0);
+        LocalDateTime endTime = LocalDateTime.of(2023, 4, 30, 21, 30);
+        String details = "어떤 계획인지 설명";
+        List<PlannedExerciseDTO> plannedExerciseDTOList = new ArrayList<>();
+        plannedExerciseDTOList.add(new PlannedExerciseDTO(1L, 3L, 10L, exerciseId));
+        plannedExerciseDTOList.add(new PlannedExerciseDTO(2L, 2L, 5L, exerciseId2));
+        ExercisePlanDTO planDTO = new ExercisePlanDTO(userNum, plannedExerciseDTOList, startTime, endTime, details);
+        Long savedPlanId = exercisePlanService.savePlan(planDTO);
+
+        /*==============modify================*/
+
+        startTime = LocalDateTime.of(2023, 4, 30, 20, 30);
+        endTime = LocalDateTime.of(2023, 4, 30, 22, 30);
+        plannedExerciseDTOList.remove(1);
+        plannedExerciseDTOList.add(new PlannedExerciseDTO(2L, 5L, 5L, exerciseId2));
+        planDTO = ExercisePlanDTO.builder()
+                .id(savedPlanId)
+                .startTime(startTime)
+                .endTime(endTime)
+                .userNum(userNum)
+                .details(details)
+                .plannedExerciseDTOList(plannedExerciseDTOList)
+                .build();
+        Long modifiedPlanId = exercisePlanService.modifyPlan(planDTO);
+        ExercisePlanDTO modifiedPlanDTO = exercisePlanService.findPlanById(modifiedPlanId);
+
+        assertThat(modifiedPlanDTO.getEndTime())
+                .as("수정할 계획과 수정된 계획의 내용이 같아야 함")
+                .isEqualTo(planDTO.getEndTime());
+        assertThat(modifiedPlanDTO.getStartTime())
+                .as("수정할 계획과 수정된 계획의 내용이 같아야 함")
+                .isEqualTo(planDTO.getStartTime());
+        assertThat(modifiedPlanDTO.getPlannedExerciseDTOList().get(1).getSets())
+                .as("수정할 계획과 수정된 계획의 내용이 같아야 함")
+                .isEqualTo(planDTO.getPlannedExerciseDTOList().get(1).getSets());
+    }
+
+    @Test
+    void removePlan() {
+        User user = new User();
+        user.setName("kim");
+        user.setId("kim12");
+        user.setPw("qwer12");
+        user.setBirth(LocalDate.now());
+        user.setHeight(170);
+        user.setWeight(60);
+        user.setGender("남자");
+        Long userNum = userService.saveUser(user);
+
+        ExerciseDTO exerciseDTO = ExerciseDTO.builder()
+                .name("푸쉬업")
+                .isEquipment(false)
+                .img("http://localhost:80/images/push-up.jpg")
+                .info("대충 방법과 주의사항")
+                .parts(new ArrayList<ExercisePartName>(List.of(ExercisePartName.ARM, ExercisePartName.CHEST)))
+                .build();
+
+        ExerciseDTO exerciseDTO2 = ExerciseDTO.builder()
+                .name("턱걸이")
+                .isEquipment(true)
+                .img("http://localhost:80/images/pull-up.jpg")
+                .info("대충 방법과 주의사항")
+                .parts(new ArrayList<ExercisePartName>(List.of(ExercisePartName.BACK, ExercisePartName.ARM,
+                        ExercisePartName.CHEST, ExercisePartName.SHOULDER)))
+                .build();
+
+        Long exerciseId = exerciseService.saveExercise(exerciseDTO);
+        Long exerciseId2 = exerciseService.saveExercise(exerciseDTO2);
+
+        LocalDateTime startTime = LocalDateTime.of(2023, 4, 30, 20, 0);
+        LocalDateTime endTime = LocalDateTime.of(2023, 4, 30, 21, 30);
+        String details = "어떤 계획인지 설명";
+        List<PlannedExerciseDTO> plannedExerciseDTOList = new ArrayList<>();
+        plannedExerciseDTOList.add(new PlannedExerciseDTO(1L, 3L, 10L, exerciseId));
+        plannedExerciseDTOList.add(new PlannedExerciseDTO(2L, 2L, 5L, exerciseId2));
+        ExercisePlanDTO planDTO = new ExercisePlanDTO(userNum, plannedExerciseDTOList, startTime, endTime, details);
+        Long savedPlanId = exercisePlanService.savePlan(planDTO);
+
+        Long isSuccess = exercisePlanService.removePlan(savedPlanId);
+
+        assertThat(isSuccess)
+                .as("계획 삭제 성공 시 1L 반환")
+                .isEqualTo(1L);
     }
 }

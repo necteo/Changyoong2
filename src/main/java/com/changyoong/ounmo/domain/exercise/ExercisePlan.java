@@ -18,7 +18,6 @@ public class ExercisePlan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    private LocalDate Date;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
@@ -45,7 +44,9 @@ public class ExercisePlan {
         plannedExercise.setPlan(this);
     }
 
-    public static ExercisePlan createPlan(User user, List<PlannedExercise> plannedExercises, LocalDateTime startTime, LocalDateTime endTime, String details) {
+    public static ExercisePlan createPlan(User user,
+                                          List<PlannedExercise> plannedExercises,
+                                          LocalDateTime startTime, LocalDateTime endTime, String details) {
         ExercisePlan exercisePlan = new ExercisePlan();
         exercisePlan.setStartTime(startTime);
         exercisePlan.setEndTime(endTime);

@@ -1,13 +1,12 @@
 package com.changyoong.ounmo.service;
 
-import com.changyoong.ounmo.domain.exercise.Exercise;
-import com.changyoong.ounmo.domain.exercise.ExercisePartName;
+import com.changyoong.ounmo.dto.ExerciseDTO;
 
 import java.util.List;
 
 public interface ExerciseService {
-    List<Exercise> findAll();
-    Exercise findExerciseById(Long exerciseId);
-    List<Exercise> findExercisesByPartName(ExercisePartName partName);
-    Long saveExercise(String name, Boolean equipment, String img, String info, ExercisePartName... partNames);
+    List<ExerciseDTO> findAll();
+    ExerciseDTO findExerciseById(Long exerciseId);
+    List<ExerciseDTO> findExercisesByName(String name);
+    Long saveExercise(ExerciseDTO exerciseDTO);
 }
