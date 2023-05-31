@@ -28,7 +28,7 @@ class ExerciseServiceTest {
                 .isEquipment(false)
                 .img("http://localhost:80/images/push-up.jpg")
                 .info("대충 방법과 주의사항")
-                .parts(new ArrayList<ExercisePartName>(List.of(ExercisePartName.ARM, ExercisePartName.CHEST)))
+                .parts(new ArrayList<>(List.of(ExercisePartName.ARM, ExercisePartName.CHEST)))
                 .build();
         Long exerciseId = exerciseService.saveExercise(exerciseDTO);
 

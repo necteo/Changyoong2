@@ -34,7 +34,7 @@ class ExercisePlanServiceTest {
                 .isEquipment(false)
                 .img("http://localhost:80/images/push-up.jpg")
                 .info("대충 방법과 주의사항")
-                .parts(new ArrayList<ExercisePartName>(List.of(ExercisePartName.ARM, ExercisePartName.CHEST)))
+                .parts(new ArrayList<>(List.of(ExercisePartName.ARM, ExercisePartName.CHEST)))
                 .build();
 
         ExerciseDTO exerciseDTO2 = ExerciseDTO.builder()
@@ -42,7 +42,7 @@ class ExercisePlanServiceTest {
                 .isEquipment(true)
                 .img("http://localhost:80/images/pull-up.jpg")
                 .info("대충 방법과 주의사항")
-                .parts(new ArrayList<ExercisePartName>(List.of(ExercisePartName.BACK, ExercisePartName.ARM,
+                .parts(new ArrayList<>(List.of(ExercisePartName.BACK, ExercisePartName.ARM,
                         ExercisePartName.CHEST, ExercisePartName.SHOULDER)))
                 .build();
 
@@ -74,7 +74,7 @@ class ExercisePlanServiceTest {
                 .isEquipment(false)
                 .img("http://localhost:80/images/push-up.jpg")
                 .info("대충 방법과 주의사항")
-                .parts(new ArrayList<ExercisePartName>(List.of(ExercisePartName.ARM, ExercisePartName.CHEST)))
+                .parts(new ArrayList<>(List.of(ExercisePartName.ARM, ExercisePartName.CHEST)))
                 .build();
 
         ExerciseDTO exerciseDTO2 = ExerciseDTO.builder()
@@ -82,7 +82,7 @@ class ExercisePlanServiceTest {
                 .isEquipment(true)
                 .img("http://localhost:80/images/pull-up.jpg")
                 .info("대충 방법과 주의사항")
-                .parts(new ArrayList<ExercisePartName>(List.of(ExercisePartName.BACK, ExercisePartName.ARM,
+                .parts(new ArrayList<>(List.of(ExercisePartName.BACK, ExercisePartName.ARM,
                         ExercisePartName.CHEST, ExercisePartName.SHOULDER)))
                 .build();
 
@@ -121,7 +121,7 @@ class ExercisePlanServiceTest {
                 .isEquipment(false)
                 .img("http://localhost:80/images/push-up.jpg")
                 .info("대충 방법과 주의사항")
-                .parts(new ArrayList<ExercisePartName>(List.of(ExercisePartName.ARM, ExercisePartName.CHEST)))
+                .parts(new ArrayList<>(List.of(ExercisePartName.ARM, ExercisePartName.CHEST)))
                 .build();
 
         ExerciseDTO exerciseDTO2 = ExerciseDTO.builder()
@@ -129,7 +129,7 @@ class ExercisePlanServiceTest {
                 .isEquipment(true)
                 .img("http://localhost:80/images/pull-up.jpg")
                 .info("대충 방법과 주의사항")
-                .parts(new ArrayList<ExercisePartName>(List.of(ExercisePartName.BACK, ExercisePartName.ARM,
+                .parts(new ArrayList<>(List.of(ExercisePartName.BACK, ExercisePartName.ARM,
                         ExercisePartName.CHEST, ExercisePartName.SHOULDER)))
                 .build();
 
@@ -190,7 +190,7 @@ class ExercisePlanServiceTest {
                 .isEquipment(false)
                 .img("http://localhost:80/images/push-up.jpg")
                 .info("대충 방법과 주의사항")
-                .parts(new ArrayList<ExercisePartName>(List.of(ExercisePartName.ARM, ExercisePartName.CHEST)))
+                .parts(new ArrayList<>(List.of(ExercisePartName.ARM, ExercisePartName.CHEST)))
                 .build();
 
         ExerciseDTO exerciseDTO2 = ExerciseDTO.builder()
@@ -198,7 +198,7 @@ class ExercisePlanServiceTest {
                 .isEquipment(true)
                 .img("http://localhost:80/images/pull-up.jpg")
                 .info("대충 방법과 주의사항")
-                .parts(new ArrayList<ExercisePartName>(List.of(ExercisePartName.BACK, ExercisePartName.ARM,
+                .parts(new ArrayList<>(List.of(ExercisePartName.BACK, ExercisePartName.ARM,
                         ExercisePartName.CHEST, ExercisePartName.SHOULDER)))
                 .build();
 

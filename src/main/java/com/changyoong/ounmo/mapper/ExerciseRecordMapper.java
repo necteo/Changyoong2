@@ -41,9 +41,8 @@ public interface ExerciseRecordMapper {
 
     default List<ExerciseRecordDTO> toExerciseRecordDTOList(List<ExerciseRecord> exerciseRecords) {
         List<ExerciseRecordDTO> exerciseRecordDTOList = new ArrayList<>();
-        exerciseRecords.forEach(exerciseRecord -> {
-            exerciseRecordDTOList.add(ExerciseRecordMapper.INSTANCE.toExerciseRecordDTO(exerciseRecord));
-        });
+        exerciseRecords.forEach(exerciseRecord ->
+                exerciseRecordDTOList.add(ExerciseRecordMapper.INSTANCE.toExerciseRecordDTO(exerciseRecord)));
         return exerciseRecordDTOList;
     }
 }

@@ -46,7 +46,6 @@ public class ExerciseRecordServiceImpl implements ExerciseRecordService {
 
         List<ConductExerciseRecord> conductExerciseRecords = new ArrayList<>();
         exerciseRecordDTO.getConductExerciseRecordDTOList().forEach(conductExerciseRecordDTO -> {
-            ConductExerciseRecord conductExerciseRecord = new ConductExerciseRecord();
             Exercise exercise = exerciseRepository.findById(conductExerciseRecordDTO.getExerciseId())
                     .orElseThrow(() -> new IllegalArgumentException("exercise doesn't exist"));
             conductExerciseRecords.add(ConductExerciseRecord.createConductExerciseRecord(

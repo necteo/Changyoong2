@@ -40,9 +40,8 @@ public interface ExercisePlanMapper {
 
     default List<ExercisePlanDTO> toExercisePlanDTOList(List<ExercisePlan> exercisePlans) {
         List<ExercisePlanDTO> exercisePlanDTOList = new ArrayList<>();
-        exercisePlans.forEach(exercisePlan -> {
-            exercisePlanDTOList.add(ExercisePlanMapper.INSTANCE.toExercisePlanDTO(exercisePlan));
-        });
+        exercisePlans.forEach(exercisePlan ->
+                exercisePlanDTOList.add(ExercisePlanMapper.INSTANCE.toExercisePlanDTO(exercisePlan)));
         return exercisePlanDTOList;
     }
 }

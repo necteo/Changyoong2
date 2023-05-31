@@ -14,3 +14,12 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+  security:
+    oauth2.client:
+      registration:
+        google:
+          clientId: '{구글 client-id}'
+          clientSecret: '{구글 client-secret}'
+          scope:
+            - email
+            - profile

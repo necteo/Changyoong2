@@ -31,19 +31,19 @@ public class UserController {
 
     @GetMapping("/logout")
     public @ResponseBody String logout(HttpServletRequest request) {
-        // ToDo : 로그아웃
-        return "";
+        // TODO 로그아웃
+        return null;
     }
 
     @GetMapping("/user/{userNum}")
     public User getMyPage(@PathVariable(value = "userNum") Long userNum) {
-        // ToDo : 마이페이지 조회
-        return new User();
+        // TODO 마이페이지 조회
+        return null;
     }
 
     @GetMapping("/delete")
     public @ResponseBody Long deleteAccount() {
-        // ToDo : 회원삭제
-        return 0L;
+        // TODO 회원삭제
+        return null;
     }
 }

@@ -31,9 +31,7 @@ public class ExerciseServiceImpl implements ExerciseService {
         Exercise exercise = exerciseRepository.findById(exerciseId)
                 .orElseThrow(() -> new IllegalArgumentException("exercise doesn't exist"));
         List<ExercisePartName> partNames = new ArrayList<>();
-        exercise.getParts().forEach(exercisePart -> {
-            partNames.add(exercisePart.getPartName());
-        });
+        exercise.getParts().forEach(exercisePart -> partNames.add(exercisePart.getPartName()));
         return ExerciseMapper.INSTANCE.toExerciseDTO(exercise, partNames);
     }
 
