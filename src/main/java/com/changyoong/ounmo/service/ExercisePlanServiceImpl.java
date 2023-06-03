@@ -39,7 +39,7 @@ public class ExercisePlanServiceImpl implements ExercisePlanService {
 
     @Override
     public Long savePlan(ExercisePlanDTO planDTO) {
-        User user = userRepository.findByNum(planDTO.getUserNum())
+        User user = userRepository.findById(planDTO.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("user doesn't exist"));
 
         List<PlannedExercise> plannedExercises = new ArrayList<>();

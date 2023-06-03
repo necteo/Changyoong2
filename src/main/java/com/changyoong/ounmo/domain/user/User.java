@@ -17,14 +17,15 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long num;
+    private Long id;
 
-    private String id;
+    private String email;
+    private String username;
     private String pw;
 
     private LocalDate birth;
 
-    private String name;
+    private String nickname;
 
     private Integer height;
     private Integer weight;
@@ -36,12 +37,12 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<ExerciseRecord> exerciseRecords = new ArrayList<>();
 
-    public User(Long num, String id, String pw, LocalDate birth, String name, Integer height, Integer weight, String gender) {
-        this.num = num;
-        this.id = id;
-        this.pw = pw;
+    @Builder
+    public User(String email, String username, LocalDate birth, String nickname, Integer height, Integer weight, String gender) {
+        this.email = email;
+        this.username = username;
         this.birth = birth;
-        this.name = name;
+        this.nickname = nickname;
         this.height = height;
         this.weight = weight;
         this.gender = gender;

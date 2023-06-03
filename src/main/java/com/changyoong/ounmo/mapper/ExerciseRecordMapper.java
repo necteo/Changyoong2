@@ -34,7 +34,7 @@ public interface ExerciseRecordMapper {
                 .date(record.getDate())
                 .time(record.getTime())
                 .calories(record.getCalories())
-                .userNum(record.getUser().getNum())
+                .userId(record.getUser().getId())
                 .conductExerciseRecordDTOList(conductExerciseRecordDTOList)
                 .build();
     }

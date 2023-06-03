@@ -60,8 +60,8 @@ class ExercisePlanServiceTest {
     @Test
     void savePlan() {
         User user = new User();
-        user.setName("kim");
-        user.setId("kim12");
+        user.setNickname("kim");
+        user.setUsername("kim12");
         user.setPw("qwer12");
         user.setBirth(LocalDate.now());
         user.setHeight(170);
@@ -107,8 +107,8 @@ class ExercisePlanServiceTest {
     @Test
     void modifyPlan() {
         User user = new User();
-        user.setName("kim");
-        user.setId("kim12");
+        user.setNickname("kim");
+        user.setUsername("kim12");
         user.setPw("qwer12");
         user.setBirth(LocalDate.now());
         user.setHeight(170);
@@ -155,7 +155,7 @@ class ExercisePlanServiceTest {
                 .id(savedPlanId)
                 .startTime(startTime)
                 .endTime(endTime)
-                .userNum(userNum)
+                .userId(userNum)
                 .details(details)
                 .plannedExerciseDTOList(plannedExerciseDTOList)
                 .build();
@@ -176,8 +176,8 @@ class ExercisePlanServiceTest {
     @Test
     void removePlan() {
         User user = new User();
-        user.setName("kim");
-        user.setId("kim12");
+        user.setNickname("kim");
+        user.setUsername("kim12");
         user.setPw("qwer12");
         user.setBirth(LocalDate.now());
         user.setHeight(170);

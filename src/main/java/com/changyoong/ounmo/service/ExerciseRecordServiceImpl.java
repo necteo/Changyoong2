@@ -41,7 +41,7 @@ public class ExerciseRecordServiceImpl implements ExerciseRecordService {
 
     @Override
     public Long saveRecord(ExerciseRecordDTO exerciseRecordDTO) {
-        User user = userRepository.findByNum(exerciseRecordDTO.getUserNum())
+        User user = userRepository.findById(exerciseRecordDTO.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("user doesn't exist"));
 
         List<ConductExerciseRecord> conductExerciseRecords = new ArrayList<>();

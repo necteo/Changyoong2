@@ -29,8 +29,8 @@ class ExerciseRecordServiceTest {
     @Test
     void saveRecord() {
         User user = new User();
-        user.setName("kim");
-        user.setId("kim12");
+        user.setNickname("kim");
+        user.setUsername("kim12");
         user.setPw("qwer12");
         user.setBirth(LocalDate.now());
         user.setHeight(170);
@@ -75,7 +75,7 @@ class ExerciseRecordServiceTest {
                 .date(LocalDate.of(2023, 5, 30))
                 .time(90L)
                 .calories(1800L)
-                .userNum(userNum)
+                .userId(userNum)
                 .conductExerciseRecordDTOList(conductExerciseRecordDTOList)
                 .build();
 

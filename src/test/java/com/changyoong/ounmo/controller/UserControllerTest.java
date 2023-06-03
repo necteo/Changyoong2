@@ -14,7 +14,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDate;
 
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -30,8 +29,8 @@ class UserControllerTest {
     @Test
     public void signUp() throws Exception {
         User user = new User();
-        user.setName("kim");
-        user.setId("kim12");
+        user.setNickname("kim");
+        user.setUsername("kim12");
         user.setPw("qwer12");
         user.setBirth(LocalDate.now());
         user.setHeight(170);
@@ -51,10 +50,17 @@ class UserControllerTest {
 
     @Test
     void login() throws Exception {
-        User user = new User(1L, "kim", "kim12", LocalDate.now(), "qwer12", 170, 60, "남자");
+        User user = new User();
+        user.setNickname("kim");
+        user.setUsername("kim12");
+        user.setPw("qwer12");
+        user.setBirth(LocalDate.now());
+        user.setHeight(170);
+        user.setWeight(60);
+        user.setGender("남자");
         LoginUserDTO loginUserDTO = new LoginUserDTO("kim12", "qwer12");
 
-        given(userService.login(loginUserDTO.getId(), loginUserDTO.getPw())).willReturn(loginUserDTO.getId());
+        given(userService.login(loginUserDTO.getUsername(), loginUserDTO.getPw())).willReturn(loginUserDTO.getUsername());
         String content = new ObjectMapper().writeValueAsString(loginUserDTO);
 
         mockMvc.perform(
@@ -63,7 +69,7 @@ class UserControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_PLAIN))
-                .andExpect(content().string(loginUserDTO.getId()))
+                .andExpect(content().string(loginUserDTO.getUsername()))
                 .andDo(print());
     }
 }

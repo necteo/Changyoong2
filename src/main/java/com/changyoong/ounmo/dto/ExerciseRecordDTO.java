@@ -17,6 +17,6 @@ public class ExerciseRecordDTO {
     private LocalDate date;
     private Long time;
     private Long calories;
-    private Long userNum;
+    private Long userId;
     private List<ConductExerciseRecordDTO> conductExerciseRecordDTOList;
 }

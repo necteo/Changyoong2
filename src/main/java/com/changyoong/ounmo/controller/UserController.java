@@ -16,15 +16,15 @@ public class UserController {
 
     @PostMapping("/signup")
     public @ResponseBody Long signUp(@RequestBody User user) {
-        System.out.println("Sign Up : " + user.getName());
+        System.out.println("Sign Up : " + user.getNickname());
         return userService.saveUser(user);
     }
 
     @PostMapping("/login")
     public @ResponseBody String login(@RequestBody LoginUserDTO loginUserDTO, HttpServletRequest request) {
-        System.out.println("Login : " + loginUserDTO.getId());
+        System.out.println("Login : " + loginUserDTO.getUsername());
         HttpSession session = request.getSession();
-        String loginUser = userService.login(loginUserDTO.getId(), loginUserDTO.getPw());
+        String loginUser = userService.login(loginUserDTO.getUsername(), loginUserDTO.getPw());
         session.setAttribute(loginUser, loginUserDTO);
         return loginUser;
     }
@@ -35,8 +35,8 @@ public class UserController {
         return null;
     }
 
-    @GetMapping("/user/{userNum}")
-    public User getMyPage(@PathVariable(value = "userNum") Long userNum) {
+    @GetMapping("/user/{userId}")
+    public User getMyPage(@PathVariable(value = "userId") Long userId) {
         // TODO 마이페이지 조회
         return null;
     }

@@ -17,10 +17,10 @@ class UserServiceTest {
     UserService userService;
 
     @Test
-    public void signUp() throws Exception {
+    public void signUp() {
         User user = new User();
-        user.setName("kim");
-        user.setId("kim12");
+        user.setNickname("kim");
+        user.setUsername("kim12");
         user.setPw("qwer12");
         user.setBirth(LocalDate.now());
         user.setHeight(170);
@@ -31,16 +31,16 @@ class UserServiceTest {
 
         assertThat(user)
                 .as(() -> "가입 회원과 조회된 회원은 같아야 함")
-                .isEqualTo(userService.findUserByNum(saveNum));
+                .isEqualTo(userService.findUserById(saveNum));
     }
 
     @Test
-    public void login() throws Exception {
+    public void login() {
         String id = "kim12";
         String pw = "qwer12";
         String loginId = userService.login(id, pw);
         assertThat(id)
                 .as(() -> "아이디가 같아야함")
-                .isEqualTo(userService.findUserById(loginId).getId());
+                .isEqualTo(userService.findUserByUsername(loginId).getUsername());
     }
 }
