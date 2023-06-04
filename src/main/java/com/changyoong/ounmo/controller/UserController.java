@@ -1,7 +1,6 @@
 package com.changyoong.ounmo.controller;
 
 import com.changyoong.ounmo.dto.user.LoginUserDTO;
-import com.changyoong.ounmo.domain.user.User;
 import com.changyoong.ounmo.dto.user.SocialOAuthInfo;
 import com.changyoong.ounmo.dto.user.UserInfoDTO;
 import com.changyoong.ounmo.service.user.OauthService;
@@ -42,16 +41,9 @@ public class UserController {
         return userService.findUserByEmail(info.getEmail()).getId();
     }
 
-    @GetMapping("/logout")
-    public @ResponseBody String logout(HttpServletRequest request) {
-        // TODO 로그아웃
-        return null;
-    }
-
-    @GetMapping("/user/{userId}")
-    public User getMyPage(@PathVariable(value = "userId") Long userId) {
-        // TODO 마이페이지 조회
-        return null;
+    @GetMapping("/user/info")
+    public UserInfoDTO getMyPage() {
+        return userService.findUserByEmail("email");
     }
 
     @GetMapping("/delete")
