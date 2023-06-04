@@ -1,8 +1,8 @@
 package com.changyoong.ounmo.controller;
 
-import com.changyoong.ounmo.dto.LoginUserDTO;
+import com.changyoong.ounmo.dto.user.LoginUserDTO;
 import com.changyoong.ounmo.domain.user.User;
-import com.changyoong.ounmo.service.UserService;
+import com.changyoong.ounmo.service.user.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ class UserControllerTest {
         User user = new User();
         user.setNickname("kim");
         user.setUsername("kim12");
-        user.setPw("qwer12");
+        user.setPassword("qwer12");
         user.setBirth(LocalDate.now());
         user.setHeight(170);
         user.setWeight(60);
@@ -53,7 +53,7 @@ class UserControllerTest {
         User user = new User();
         user.setNickname("kim");
         user.setUsername("kim12");
-        user.setPw("qwer12");
+        user.setPassword("qwer12");
         user.setBirth(LocalDate.now());
         user.setHeight(170);
         user.setWeight(60);

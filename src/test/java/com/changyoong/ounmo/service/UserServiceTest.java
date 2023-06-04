@@ -1,6 +1,7 @@
 package com.changyoong.ounmo.service;
 
-import com.changyoong.ounmo.domain.user.User;
+import com.changyoong.ounmo.dto.user.UserInfoDTO;
+import com.changyoong.ounmo.service.user.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,20 +19,20 @@ class UserServiceTest {
 
     @Test
     public void signUp() {
-        User user = new User();
-        user.setNickname("kim");
-        user.setUsername("kim12");
-        user.setPw("qwer12");
-        user.setBirth(LocalDate.now());
-        user.setHeight(170);
-        user.setWeight(60);
-        user.setGender("남자");
+        UserInfoDTO userInfoDTO = UserInfoDTO.builder()
+                .username("kim12")
+                .password("qwer12")
+                .nickname("kim")
+                .birth(LocalDate.now())
+                .height(170)
+                .weight(60)
+                .gender("남자")
+                .build();
+        Long userNum = userService.saveUser(userInfoDTO, "email");
 
-        Long saveNum = userService.saveUser(user);
-
-        assertThat(user)
+        assertThat(userInfoDTO.getUsername())
                 .as(() -> "가입 회원과 조회된 회원은 같아야 함")
-                .isEqualTo(userService.findUserById(saveNum));
+                .isEqualTo(userService.findUserById(userNum));
     }
 
     @Test

@@ -1,7 +1,7 @@
 package com.changyoong.ounmo.controller;
 
-import com.changyoong.ounmo.dto.ExerciseRecordDTO;
-import com.changyoong.ounmo.service.ExerciseRecordService;
+import com.changyoong.ounmo.dto.exericse.ExerciseRecordDTO;
+import com.changyoong.ounmo.service.exercise.ExerciseRecordService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +20,6 @@ public class ExerciseRecordController {
 
     @PostMapping("/save")
     public @ResponseBody Long saveRecord(@RequestBody ExerciseRecordDTO exerciseRecordDTO) {
-         return exerciseRecordService.saveRecord(exerciseRecordDTO);
+         return exerciseRecordService.saveRecord(exerciseRecordDTO, "email");
     }
 }

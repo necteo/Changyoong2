@@ -18,4 +18,10 @@ public class File {
 
     @Column(name = "FILE_PATH")
     private String filePath;
+
+    public static File createFile(String filePath) {
+        File file = new File();
+        file.filePath = filePath;
+        return file;
+    }
 }

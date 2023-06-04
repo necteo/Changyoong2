@@ -22,5 +22,13 @@ public class Like {
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    private Boolean checked;
+    public void setBoard(Board board) {
+        this.board = board;
+        board.getLikes().add(this);
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+        user.getLikes().add(this);
+    }
 }

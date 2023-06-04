@@ -1,7 +1,7 @@
 package com.changyoong.ounmo.controller;
 
-import com.changyoong.ounmo.dto.ExerciseDTO;
-import com.changyoong.ounmo.service.ExerciseService;
+import com.changyoong.ounmo.dto.exericse.ExerciseDTO;
+import com.changyoong.ounmo.service.exercise.ExerciseService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

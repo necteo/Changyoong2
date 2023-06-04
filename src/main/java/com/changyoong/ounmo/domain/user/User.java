@@ -1,7 +1,11 @@
 package com.changyoong.ounmo.domain.user;
 
+import com.changyoong.ounmo.domain.board.Board;
+import com.changyoong.ounmo.domain.board.Comment;
+import com.changyoong.ounmo.domain.board.Like;
 import com.changyoong.ounmo.domain.exercise.ExercisePlan;
 import com.changyoong.ounmo.domain.exercise.ExerciseRecord;
+import com.changyoong.ounmo.dto.user.UserInfoDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,7 +25,7 @@ public class User {
 
     private String email;
     private String username;
-    private String pw;
+    private String password;
 
     private LocalDate birth;
 
@@ -37,14 +41,24 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<ExerciseRecord> exerciseRecords = new ArrayList<>();
 
-    @Builder
-    public User(String email, String username, LocalDate birth, String nickname, Integer height, Integer weight, String gender) {
-        this.email = email;
-        this.username = username;
-        this.birth = birth;
-        this.nickname = nickname;
-        this.height = height;
-        this.weight = weight;
-        this.gender = gender;
+    @OneToMany(mappedBy = "user")
+    private List<Board> boards = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Like> likes = new ArrayList<>();
+
+    public static User createUser(UserInfoDTO userInfoDTO) {
+        User user = new User();
+        user.setUsername(userInfoDTO.getUsername());
+        user.setPassword(userInfoDTO.getPassword());
+        user.setNickname(user.getNickname());
+        user.setBirth(userInfoDTO.getBirth());
+        user.setHeight(userInfoDTO.getHeight());
+        user.setWeight(userInfoDTO.getWeight());
+        user.setGender(userInfoDTO.getGender());
+        return user;
     }
 }

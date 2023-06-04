@@ -1,8 +1,8 @@
 package com.changyoong.ounmo.mapper;
 
 import com.changyoong.ounmo.domain.exercise.ExercisePlan;
-import com.changyoong.ounmo.dto.ExercisePlanDTO;
-import com.changyoong.ounmo.dto.PlannedExerciseDTO;
+import com.changyoong.ounmo.dto.exericse.ExercisePlanDTO;
+import com.changyoong.ounmo.dto.exericse.PlannedExerciseDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

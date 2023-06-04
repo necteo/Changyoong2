@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Setter
 @Getter
@@ -24,5 +24,17 @@ public class Comment {
     private User user;
 
     private String content;
-    private LocalDate date;
+    private LocalDateTime createdAt;
+
+    public void setUser(User user) {
+        this.user = user;
+        user.getComments().add(this);
+    }
+
+    public static Comment createComment(String content) {
+        Comment comment = new Comment();
+        comment.content = content;
+        comment.createdAt = LocalDateTime.now();
+        return comment;
+    }
 }

@@ -1,7 +1,8 @@
 package com.changyoong.ounmo.service;
 
 import com.changyoong.ounmo.domain.exercise.ExercisePartName;
-import com.changyoong.ounmo.dto.ExerciseDTO;
+import com.changyoong.ounmo.dto.exericse.ExerciseDTO;
+import com.changyoong.ounmo.service.exercise.ExerciseService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -22,7 +23,7 @@ class ExerciseServiceTest {
     ExerciseService exerciseService;
 
     @Test
-    public void saveExercise() throws Exception {
+    public void saveExercise() {
         ExerciseDTO exerciseDTO = ExerciseDTO.builder()
                 .name("푸쉬업")
                 .isEquipment(false)

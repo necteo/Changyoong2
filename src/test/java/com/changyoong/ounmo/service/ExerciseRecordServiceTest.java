@@ -1,10 +1,13 @@
 package com.changyoong.ounmo.service;
 
 import com.changyoong.ounmo.domain.exercise.ExercisePartName;
-import com.changyoong.ounmo.domain.user.User;
-import com.changyoong.ounmo.dto.ConductExerciseRecordDTO;
-import com.changyoong.ounmo.dto.ExerciseDTO;
-import com.changyoong.ounmo.dto.ExerciseRecordDTO;
+import com.changyoong.ounmo.dto.exericse.ConductExerciseRecordDTO;
+import com.changyoong.ounmo.dto.exericse.ExerciseDTO;
+import com.changyoong.ounmo.dto.exericse.ExerciseRecordDTO;
+import com.changyoong.ounmo.dto.user.UserInfoDTO;
+import com.changyoong.ounmo.service.exercise.ExerciseRecordService;
+import com.changyoong.ounmo.service.exercise.ExerciseService;
+import com.changyoong.ounmo.service.user.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,15 +31,16 @@ class ExerciseRecordServiceTest {
 
     @Test
     void saveRecord() {
-        User user = new User();
-        user.setNickname("kim");
-        user.setUsername("kim12");
-        user.setPw("qwer12");
-        user.setBirth(LocalDate.now());
-        user.setHeight(170);
-        user.setWeight(60);
-        user.setGender("남자");
-        Long userNum = userService.saveUser(user);
+        UserInfoDTO userInfoDTO = UserInfoDTO.builder()
+                .username("kim12")
+                .password("qwer12")
+                .nickname("kim")
+                .birth(LocalDate.now())
+                .height(170)
+                .weight(60)
+                .gender("남자")
+                .build();
+        Long userNum = userService.saveUser(userInfoDTO, "email");
 
         ExerciseDTO exerciseDTO = ExerciseDTO.builder()
                 .name("푸쉬업")
@@ -79,7 +83,7 @@ class ExerciseRecordServiceTest {
                 .conductExerciseRecordDTOList(conductExerciseRecordDTOList)
                 .build();
 
-        Long savedRecordId = exerciseRecordService.saveRecord(exerciseRecordDTO);
+        Long savedRecordId = exerciseRecordService.saveRecord(exerciseRecordDTO, "email");
 
         assertThat(savedRecordId)
                 .as("저장한 기록과 조회한 기록이 같아야 함")

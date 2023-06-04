@@ -1,10 +1,13 @@
 package com.changyoong.ounmo.service;
 
 import com.changyoong.ounmo.domain.exercise.ExercisePartName;
-import com.changyoong.ounmo.dto.ExerciseDTO;
-import com.changyoong.ounmo.dto.ExercisePlanDTO;
-import com.changyoong.ounmo.dto.PlannedExerciseDTO;
-import com.changyoong.ounmo.domain.user.User;
+import com.changyoong.ounmo.dto.exericse.ExerciseDTO;
+import com.changyoong.ounmo.dto.exericse.ExercisePlanDTO;
+import com.changyoong.ounmo.dto.exericse.PlannedExerciseDTO;
+import com.changyoong.ounmo.dto.user.UserInfoDTO;
+import com.changyoong.ounmo.service.exercise.ExercisePlanService;
+import com.changyoong.ounmo.service.exercise.ExerciseService;
+import com.changyoong.ounmo.service.user.UserService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -46,7 +49,7 @@ class ExercisePlanServiceTest {
                         ExercisePartName.CHEST, ExercisePartName.SHOULDER)))
                 .build();
 
-        Long exerciseId = exerciseService.saveExercise(exerciseDTO);
+        exerciseService.saveExercise(exerciseDTO);
         Long exerciseId2 = exerciseService.saveExercise(exerciseDTO2);
 
         List<ExerciseDTO> recommendedExercises =
@@ -59,15 +62,16 @@ class ExercisePlanServiceTest {
 
     @Test
     void savePlan() {
-        User user = new User();
-        user.setNickname("kim");
-        user.setUsername("kim12");
-        user.setPw("qwer12");
-        user.setBirth(LocalDate.now());
-        user.setHeight(170);
-        user.setWeight(60);
-        user.setGender("남자");
-        Long userNum = userService.saveUser(user);
+        UserInfoDTO userInfoDTO = UserInfoDTO.builder()
+                .username("kim12")
+                .password("qwer12")
+                .nickname("kim")
+                .birth(LocalDate.now())
+                .height(170)
+                .weight(60)
+                .gender("남자")
+                .build();
+        Long userNum = userService.saveUser(userInfoDTO, "email");
 
         ExerciseDTO exerciseDTO = ExerciseDTO.builder()
                 .name("푸쉬업")
@@ -96,7 +100,7 @@ class ExercisePlanServiceTest {
         plannedExerciseDTOList.add(new PlannedExerciseDTO(1L, 3L, 10L, exerciseId));
         plannedExerciseDTOList.add(new PlannedExerciseDTO(2L, 2L, 5L, exerciseId2));
         ExercisePlanDTO planDTO = new ExercisePlanDTO(userNum, plannedExerciseDTOList, startTime, endTime, details);
-        Long savedPlanId = exercisePlanService.savePlan(planDTO);
+        Long savedPlanId = exercisePlanService.savePlan(planDTO, "");
 
 
         assertThat(savedPlanId)
@@ -106,15 +110,16 @@ class ExercisePlanServiceTest {
 
     @Test
     void modifyPlan() {
-        User user = new User();
-        user.setNickname("kim");
-        user.setUsername("kim12");
-        user.setPw("qwer12");
-        user.setBirth(LocalDate.now());
-        user.setHeight(170);
-        user.setWeight(60);
-        user.setGender("남자");
-        Long userNum = userService.saveUser(user);
+        UserInfoDTO userInfoDTO = UserInfoDTO.builder()
+                .username("kim12")
+                .password("qwer12")
+                .nickname("kim")
+                .birth(LocalDate.now())
+                .height(170)
+                .weight(60)
+                .gender("남자")
+                .build();
+        Long userNum = userService.saveUser(userInfoDTO, "email");
 
         ExerciseDTO exerciseDTO = ExerciseDTO.builder()
                 .name("푸쉬업")
@@ -143,7 +148,7 @@ class ExercisePlanServiceTest {
         plannedExerciseDTOList.add(new PlannedExerciseDTO(1L, 3L, 10L, exerciseId));
         plannedExerciseDTOList.add(new PlannedExerciseDTO(2L, 2L, 5L, exerciseId2));
         ExercisePlanDTO planDTO = new ExercisePlanDTO(userNum, plannedExerciseDTOList, startTime, endTime, details);
-        Long savedPlanId = exercisePlanService.savePlan(planDTO);
+        Long savedPlanId = exercisePlanService.savePlan(planDTO, "");
 
         /*==============modify================*/
 
@@ -175,15 +180,16 @@ class ExercisePlanServiceTest {
 
     @Test
     void removePlan() {
-        User user = new User();
-        user.setNickname("kim");
-        user.setUsername("kim12");
-        user.setPw("qwer12");
-        user.setBirth(LocalDate.now());
-        user.setHeight(170);
-        user.setWeight(60);
-        user.setGender("남자");
-        Long userNum = userService.saveUser(user);
+        UserInfoDTO userInfoDTO = UserInfoDTO.builder()
+                .username("kim12")
+                .password("qwer12")
+                .nickname("kim")
+                .birth(LocalDate.now())
+                .height(170)
+                .weight(60)
+                .gender("남자")
+                .build();
+        Long userNum = userService.saveUser(userInfoDTO, "email");
 
         ExerciseDTO exerciseDTO = ExerciseDTO.builder()
                 .name("푸쉬업")
@@ -212,11 +218,11 @@ class ExercisePlanServiceTest {
         plannedExerciseDTOList.add(new PlannedExerciseDTO(1L, 3L, 10L, exerciseId));
         plannedExerciseDTOList.add(new PlannedExerciseDTO(2L, 2L, 5L, exerciseId2));
         ExercisePlanDTO planDTO = new ExercisePlanDTO(userNum, plannedExerciseDTOList, startTime, endTime, details);
-        Long savedPlanId = exercisePlanService.savePlan(planDTO);
+        Long savedPlanId = exercisePlanService.savePlan(planDTO, "");
 
-        Long isSuccess = exercisePlanService.removePlan(savedPlanId);
+        exercisePlanService.removePlan(savedPlanId);
 
-        assertThat(isSuccess)
+        assertThat(savedPlanId)
                 .as("계획 삭제 성공 시 1L 반환")
                 .isEqualTo(1L);
     }

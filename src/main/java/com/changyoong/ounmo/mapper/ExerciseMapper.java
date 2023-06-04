@@ -3,7 +3,7 @@ package com.changyoong.ounmo.mapper;
 import com.changyoong.ounmo.domain.exercise.Exercise;
 import com.changyoong.ounmo.domain.exercise.ExercisePart;
 import com.changyoong.ounmo.domain.exercise.ExercisePartName;
-import com.changyoong.ounmo.dto.ExerciseDTO;
+import com.changyoong.ounmo.dto.exericse.ExerciseDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

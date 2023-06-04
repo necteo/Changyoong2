@@ -19,7 +19,7 @@ public class Board {
 
     private String title;
     private String content;
-    private LocalDateTime dateTime;
+    private LocalDateTime createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_NUM")
@@ -33,4 +33,32 @@ public class Board {
 
     @OneToMany(mappedBy = "board")
     private List<Like> likes = new ArrayList<>();
+
+    public void setUser(User user) {
+        this.user = user;
+        user.getBoards().add(this);
+    }
+
+    public void addFile(File file) {
+        this.files.add(file);
+        file.setBoard(this);
+    }
+
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+        comment.setBoard(this);
+    }
+
+    public void addLike(Like like) {
+        this.likes.add(like);
+        like.setBoard(this);
+    }
+
+    public static Board createBoard(String title, String content) {
+        Board board = new Board();
+        board.title = title;
+        board.content = content;
+        board.createdAt = LocalDateTime.now();
+        return board;
+    }
 }

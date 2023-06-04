@@ -1,10 +1,10 @@
 package com.changyoong.ounmo.controller;
 
 import com.changyoong.ounmo.domain.exercise.*;
-import com.changyoong.ounmo.dto.ExerciseDTO;
-import com.changyoong.ounmo.dto.ExercisePlanDTO;
-import com.changyoong.ounmo.dto.PlannedExerciseDTO;
-import com.changyoong.ounmo.service.ExercisePlanService;
+import com.changyoong.ounmo.dto.exericse.ExerciseDTO;
+import com.changyoong.ounmo.dto.exericse.ExercisePlanDTO;
+import com.changyoong.ounmo.dto.exericse.PlannedExerciseDTO;
+import com.changyoong.ounmo.service.exercise.ExercisePlanService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +30,7 @@ public class ExercisePlanController {
 
     @PostMapping("/save")
     public @ResponseBody Long savePlan(@RequestBody ExercisePlanDTO planDTO) {
-        return exercisePlanService.savePlan(planDTO);
+        return exercisePlanService.savePlan(planDTO, "");
     }
 
     @PostMapping("/add-exercise/{planId}")
@@ -46,6 +46,7 @@ public class ExercisePlanController {
 
     @GetMapping("/remove/{planId}")
     public @ResponseBody Long removePlan(@PathVariable Long planId) {
-        return exercisePlanService.removePlan(planId);
+        exercisePlanService.removePlan(planId);
+        return planId;
     }
 }
