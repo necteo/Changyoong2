@@ -3,6 +3,7 @@ package com.changyoong.ounmo.service.exercise;
 import com.changyoong.ounmo.domain.exercise.Exercise;
 import com.changyoong.ounmo.domain.exercise.ExercisePartName;
 import com.changyoong.ounmo.dto.exericse.ExerciseDTO;
+import com.changyoong.ounmo.dto.exericse.ExerciseSearchRequestDTO;
 import com.changyoong.ounmo.mapper.ExerciseMapper;
 import com.changyoong.ounmo.repository.exercise.ExercisePartRepository;
 import com.changyoong.ounmo.repository.exercise.ExerciseRepository;
@@ -36,9 +37,22 @@ public class ExerciseServiceImpl implements ExerciseService {
     }
 
     @Override
-    public List<ExerciseDTO> findExercisesByName(String name) {
-        List<Exercise> exercises = exerciseRepository.findAllByNameContaining(name);
-        return ExerciseMapper.INSTANCE.toExerciseDTOList(exercises);
+    public List<ExerciseDTO> findExercisesByEquipmentAndPartName(ExerciseSearchRequestDTO searchRequestDTO) {
+        if (searchRequestDTO.getPartNames().size() == 1) {
+            List<Exercise> exerciseResponse = exerciseRepository.findAllByEquipmentAndPart(
+                    searchRequestDTO.getIsEquipment(),
+                    searchRequestDTO.getPartNames().get(0)
+            );
+            return ExerciseMapper.INSTANCE.toExerciseDTOList(exerciseResponse);
+        } else if (searchRequestDTO.getPartNames().size() == 2) {
+            List<Exercise> exerciseResponse = exerciseRepository.findAllByEquipmentAndParts(
+                    searchRequestDTO.getIsEquipment(),
+                    searchRequestDTO.getPartNames().get(0),
+                    searchRequestDTO.getPartNames().get(1)
+            );
+            return ExerciseMapper.INSTANCE.toExerciseDTOList(exerciseResponse);
+        }
+        return null;
     }
 
     @Override

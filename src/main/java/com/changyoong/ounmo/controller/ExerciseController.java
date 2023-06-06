@@ -1,11 +1,10 @@
 package com.changyoong.ounmo.controller;
 
 import com.changyoong.ounmo.dto.exericse.ExerciseDTO;
+import com.changyoong.ounmo.dto.exericse.ExerciseSearchRequestDTO;
 import com.changyoong.ounmo.service.exercise.ExerciseService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,5 +18,12 @@ public class ExerciseController {
     public List<ExerciseDTO> findAllExercises() {
         System.out.println("find all exercises");
         return exerciseService.findAll();
+    }
+
+    @PostMapping("/search")
+    public List<ExerciseDTO> findExercisesByEquipmentAndPartName(
+            @RequestBody ExerciseSearchRequestDTO requestDTO
+    ) {
+        return exerciseService.findExercisesByEquipmentAndPartName(requestDTO);
     }
 }

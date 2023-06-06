@@ -13,5 +13,16 @@ public interface ExerciseRepository extends CrudRepository<Exercise, Long> {
 
     @Query("select e from Exercise e join ExercisePart ep on e.id = ep.exercise.id " +
             "where e.isEquipment = :isEquipment and ep.partName = :partName")
-    List<Exercise> findAllByEquipmentAndPart(@Param("isEquipment") Boolean isEquipment, @Param("partName") ExercisePartName partName);
+    List<Exercise> findAllByEquipmentAndPart(
+            @Param("isEquipment") Boolean isEquipment,
+            @Param("partName") ExercisePartName partName
+    );
+
+    @Query("select e from Exercise e join ExercisePart ep on e.id = ep.exercise.id " +
+            "where e.isEquipment = :isEquipment and ep.partName = :partName1 and ep.partName = :partName2")
+    List<Exercise> findAllByEquipmentAndParts(
+            @Param("isEquipment") Boolean isEquipment,
+            @Param("partName1") ExercisePartName partName1,
+            @Param("partName2") ExercisePartName partName2
+    );
 }

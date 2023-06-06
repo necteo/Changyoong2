@@ -17,8 +17,7 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/oauth-test/**").permitAll()
-                .requestMatchers("/ounmo/**").authenticated()
+                .requestMatchers("/ounmo/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .logout()

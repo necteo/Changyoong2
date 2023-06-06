@@ -1,5 +1,6 @@
 package com.changyoong.ounmo.controller;
 
+import com.changyoong.ounmo.dto.user.LoginResponseDTO;
 import com.changyoong.ounmo.dto.user.LoginUserDTO;
 import com.changyoong.ounmo.dto.user.SocialOAuthInfo;
 import com.changyoong.ounmo.dto.user.UserInfoDTO;
@@ -35,10 +36,13 @@ public class UserController {
     }
 
     @PostMapping("/oauth/login")
-    public @ResponseBody Long login(HttpServletRequest request) {
+    public LoginResponseDTO login(HttpServletRequest request) {
         String accessToken = request.getHeader("authorization").substring("Bearer ".length());
         SocialOAuthInfo info = oauthService.oAuthVerify(accessToken);
-        return userService.findUserByEmail(info.getEmail()).getId();
+        userService.findUserByEmail(info.getEmail());
+        return LoginResponseDTO.builder()
+                .isNewUser(Boolean.FALSE)
+                .build();
     }
 
     @GetMapping("/user/info")
