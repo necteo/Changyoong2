@@ -16,7 +16,7 @@ import java.util.List;
 public class ExercisePlanController {
     private final ExercisePlanService exercisePlanService;
 
-    @PostMapping("/all")
+    @GetMapping("/all")
     public List<ExercisePlanDTO> findAllExercisePlan() {
         System.out.println("find all plan");
         return exercisePlanService.findAll();

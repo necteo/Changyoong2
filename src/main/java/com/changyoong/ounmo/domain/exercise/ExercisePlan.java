@@ -30,8 +30,7 @@ public class ExercisePlan {
     @OneToMany(mappedBy = "plan")
     private List<PlannedExercise> plannedExercises = new ArrayList<>();
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "RECORD_ID")
+    @OneToOne(mappedBy = "plan")
     private ExerciseRecord record;
 
     public void setUser(User user) {
