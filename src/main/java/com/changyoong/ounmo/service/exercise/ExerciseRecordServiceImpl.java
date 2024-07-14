@@ -3,7 +3,7 @@ package com.changyoong.ounmo.service.exercise;
 import com.changyoong.ounmo.domain.exercise.ConductExerciseRecord;
 import com.changyoong.ounmo.domain.exercise.Exercise;
 import com.changyoong.ounmo.domain.exercise.ExerciseRecord;
-import com.changyoong.ounmo.domain.user.User;
+import com.changyoong.ounmo.domain.user.Users;
 import com.changyoong.ounmo.dto.exericse.ExerciseRecordDTO;
 import com.changyoong.ounmo.mapper.ExerciseRecordMapper;
 import com.changyoong.ounmo.repository.exercise.ConductExerciseRecordRepository;
@@ -41,7 +41,7 @@ public class ExerciseRecordServiceImpl implements ExerciseRecordService {
 
     @Override
     public Long saveRecord(ExerciseRecordDTO exerciseRecordDTO, String email) {
-        User user = userRepository.findByEmail(email)
+        Users users = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("user doesn't exist"));
 
         List<ConductExerciseRecord> conductExerciseRecords = new ArrayList<>();
@@ -57,7 +57,7 @@ public class ExerciseRecordServiceImpl implements ExerciseRecordService {
         });
 
         ExerciseRecord exerciseRecord = ExerciseRecord.createExerciseRecord(exerciseRecordDTO.getDate(),
-                exerciseRecordDTO.getTime(), exerciseRecordDTO.getCalories(), user, conductExerciseRecords);
+                exerciseRecordDTO.getTime(), exerciseRecordDTO.getCalories(), users, conductExerciseRecords);
         exerciseRecordRepository.save(exerciseRecord);
         conductExerciseRecordRepository.saveAll(conductExerciseRecords);
         return exerciseRecord.getId();

@@ -1,6 +1,6 @@
 package com.changyoong.ounmo.domain.exercise;
 
-import com.changyoong.ounmo.domain.user.User;
+import com.changyoong.ounmo.domain.user.Users;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +23,7 @@ public class ExercisePlan {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_NUM")
-    private User user;
+    private Users users;
 
     private String details;
 
@@ -33,9 +33,9 @@ public class ExercisePlan {
     @OneToOne(mappedBy = "plan")
     private ExerciseRecord record;
 
-    public void setUser(User user) {
-        this.user = user;
-        user.getPlans().add(this);
+    public void setUsers(Users users) {
+        this.users = users;
+        users.getPlans().add(this);
     }
 
     public void addPlannedExercise(PlannedExercise plannedExercise) {
@@ -43,14 +43,14 @@ public class ExercisePlan {
         plannedExercise.setPlan(this);
     }
 
-    public static ExercisePlan createPlan(User user,
+    public static ExercisePlan createPlan(Users users,
                                           List<PlannedExercise> plannedExercises,
                                           LocalDateTime startTime, LocalDateTime endTime, String details) {
         ExercisePlan exercisePlan = new ExercisePlan();
         exercisePlan.setStartTime(startTime);
         exercisePlan.setEndTime(endTime);
         exercisePlan.setDetails(details);
-        exercisePlan.setUser(user);
+        exercisePlan.setUsers(users);
         plannedExercises.forEach(exercisePlan::addPlannedExercise);
         return exercisePlan;
     }

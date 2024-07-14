@@ -1,7 +1,7 @@
 package com.changyoong.ounmo.service.board;
 
 import com.changyoong.ounmo.domain.board.Comment;
-import com.changyoong.ounmo.domain.user.User;
+import com.changyoong.ounmo.domain.user.Users;
 import com.changyoong.ounmo.dto.board.CommentDTO;
 import com.changyoong.ounmo.mapper.CommentMapper;
 import com.changyoong.ounmo.repository.board.CommentRepository;
@@ -27,10 +27,10 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Long saveComment(CommentDTO commentDTO, String email) {
-        User user = userRepository.findByEmail(email)
+        Users users = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("user doesn't exist"));
         Comment comment = Comment.createComment(commentDTO.getContent());
-        comment.setUser(user);
+        comment.setUsers(users);
         return commentRepository.save(comment).getId();
     }
 

@@ -1,6 +1,6 @@
 package com.changyoong.ounmo.domain.board;
 
-import com.changyoong.ounmo.domain.user.User;
+import com.changyoong.ounmo.domain.user.Users;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,14 +21,14 @@ public class Comment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
-    private User user;
+    private Users users;
 
     private String content;
     private LocalDateTime createdAt;
 
-    public void setUser(User user) {
-        this.user = user;
-        user.getComments().add(this);
+    public void setUsers(Users users) {
+        this.users = users;
+        users.getComments().add(this);
     }
 
     public static Comment createComment(String content) {

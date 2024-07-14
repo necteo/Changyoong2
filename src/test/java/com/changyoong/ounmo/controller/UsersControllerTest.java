@@ -1,9 +1,11 @@
 package com.changyoong.ounmo.controller;
 
 import com.changyoong.ounmo.dto.user.LoginUserDTO;
-import com.changyoong.ounmo.domain.user.User;
+import com.changyoong.ounmo.domain.user.Users;
+import com.changyoong.ounmo.service.user.OauthService;
 import com.changyoong.ounmo.service.user.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -19,25 +21,29 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(UserController.class)
-class UserControllerTest {
+class UsersControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @MockBean
+    OauthService oauthService;
     @MockBean
     UserService userService;
 
     @Test
     public void signUp() throws Exception {
-        User user = new User();
-        user.setNickname("kim");
-        user.setUsername("kim12");
-        user.setPassword("qwer12");
-        user.setBirth(LocalDate.now());
-        user.setHeight(170);
-        user.setWeight(60);
-        user.setGender("남자");
+        Users users = new Users();
+        users.setNickname("kim");
+        users.setUsername("kim12");
+        users.setPassword("qwer12");
+        users.setBirth(LocalDate.now());
+        users.setHeight(170);
+        users.setWeight(60);
+        users.setGender("남자");
 
-        String content = new ObjectMapper().writeValueAsString(user);
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        String content = objectMapper.writeValueAsString(users);
 
         mockMvc.perform(
                 post("/ounmo/signup")
@@ -50,14 +56,14 @@ class UserControllerTest {
 
     @Test
     void login() throws Exception {
-        User user = new User();
-        user.setNickname("kim");
-        user.setUsername("kim12");
-        user.setPassword("qwer12");
-        user.setBirth(LocalDate.now());
-        user.setHeight(170);
-        user.setWeight(60);
-        user.setGender("남자");
+        Users users = new Users();
+        users.setNickname("kim");
+        users.setUsername("kim12");
+        users.setPassword("qwer12");
+        users.setBirth(LocalDate.now());
+        users.setHeight(170);
+        users.setWeight(60);
+        users.setGender("남자");
         LoginUserDTO loginUserDTO = new LoginUserDTO("kim12", "qwer12");
 
         given(userService.login(loginUserDTO.getUsername(), loginUserDTO.getPw())).willReturn(loginUserDTO.getUsername());

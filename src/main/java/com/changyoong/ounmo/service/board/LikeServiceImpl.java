@@ -2,7 +2,7 @@ package com.changyoong.ounmo.service.board;
 
 import com.changyoong.ounmo.domain.board.Board;
 import com.changyoong.ounmo.domain.board.Like;
-import com.changyoong.ounmo.domain.user.User;
+import com.changyoong.ounmo.domain.user.Users;
 import com.changyoong.ounmo.dto.board.BoardDTO;
 import com.changyoong.ounmo.dto.board.LikeDTO;
 import com.changyoong.ounmo.mapper.BoardMapper;
@@ -26,9 +26,9 @@ public class LikeServiceImpl implements LikeService {
 
     @Override
     public List<BoardDTO> findBoardsByUser(String email) {
-        User user = userRepository.findByEmail(email)
+        Users users = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("user doesn't exist"));
-        List<Like> likes = likeRepository.findAllByUserId(user.getId());
+        List<Like> likes = likeRepository.findAllByUsersId(users.getId());
         List<Board> boards = new ArrayList<>();
         likes.forEach(like -> boards.add(boardRepository.findById(like.getBoard().getId())
                 .orElseThrow(() -> new IllegalArgumentException("board doesn't exist"))));
@@ -39,11 +39,11 @@ public class LikeServiceImpl implements LikeService {
     public Long saveLike(LikeDTO likeDTO, String email) {
         Board board = boardRepository.findById(likeDTO.getBoardId())
                 .orElseThrow(() -> new IllegalArgumentException("board doesn't exist"));
-        User user = userRepository.findByEmail(email)
+        Users users = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("user doesn't exist"));
         Like like = new Like();
         like.setBoard(board);
-        like.setUser(user);
+        like.setUsers(users);
         return likeRepository.save(like).getId();
     }
 

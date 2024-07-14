@@ -1,6 +1,6 @@
 package com.changyoong.ounmo.domain.board;
 
-import com.changyoong.ounmo.domain.user.User;
+import com.changyoong.ounmo.domain.user.Users;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,15 +20,15 @@ public class Like {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
-    private User user;
+    private Users users;
 
     public void setBoard(Board board) {
         this.board = board;
         board.getLikes().add(this);
     }
 
-    public void setUser(User user) {
-        this.user = user;
-        user.getLikes().add(this);
+    public void setUsers(Users users) {
+        this.users = users;
+        users.getLikes().add(this);
     }
 }

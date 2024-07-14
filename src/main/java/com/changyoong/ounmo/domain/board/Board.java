@@ -1,6 +1,6 @@
 package com.changyoong.ounmo.domain.board;
 
-import com.changyoong.ounmo.domain.user.User;
+import com.changyoong.ounmo.domain.user.Users;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +23,7 @@ public class Board {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_NUM")
-    private User user;
+    private Users users;
 
     @OneToMany(mappedBy = "board")
     private List<File> files = new ArrayList<>();
@@ -34,9 +34,9 @@ public class Board {
     @OneToMany(mappedBy = "board")
     private List<Like> likes = new ArrayList<>();
 
-    public void setUser(User user) {
-        this.user = user;
-        user.getBoards().add(this);
+    public void setUsers(Users users) {
+        this.users = users;
+        users.getBoards().add(this);
     }
 
     public void addFile(File file) {

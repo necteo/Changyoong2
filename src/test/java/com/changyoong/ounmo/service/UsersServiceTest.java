@@ -13,7 +13,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
 @Transactional
-class UserServiceTest {
+class UsersServiceTest {
     @Autowired
     UserService userService;
 
@@ -32,7 +32,7 @@ class UserServiceTest {
 
         assertThat(userInfoDTO.getUsername())
                 .as(() -> "가입 회원과 조회된 회원은 같아야 함")
-                .isEqualTo(userService.findUserById(userNum));
+                .isEqualTo(userService.findUserById(userNum).getUsername());
     }
 
     @Test

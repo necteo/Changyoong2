@@ -1,6 +1,6 @@
 package com.changyoong.ounmo.domain.exercise;
 
-import com.changyoong.ounmo.domain.user.User;
+import com.changyoong.ounmo.domain.user.Users;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +23,7 @@ public class ExerciseRecord {
     private Long calories;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    private Users users;
 
     @OneToMany(mappedBy = "record")
     private List<ConductExerciseRecord> conductExerciseRecords = new ArrayList<>();
@@ -32,9 +32,9 @@ public class ExerciseRecord {
     @JoinColumn(name = "PLAN_ID")
     private ExercisePlan plan;
 
-    public void setUser(User user) {
-        this.user = user;
-        user.getExerciseRecords().add(this);
+    public void setUsers(Users users) {
+        this.users = users;
+        users.getExerciseRecords().add(this);
     }
 
     public void addConductExerciseRecord(ConductExerciseRecord conductExerciseRecord) {
@@ -42,13 +42,13 @@ public class ExerciseRecord {
         conductExerciseRecord.setRecord(this);
     }
 
-    public static ExerciseRecord createExerciseRecord(LocalDate date, Long time, Long calories, User user,
+    public static ExerciseRecord createExerciseRecord(LocalDate date, Long time, Long calories, Users users,
                                                       List<ConductExerciseRecord> conductExerciseRecords) {
         ExerciseRecord exerciseRecord = new ExerciseRecord();
         exerciseRecord.setDate(date);
         exerciseRecord.setTime(time);
         exerciseRecord.setCalories(calories);
-        exerciseRecord.setUser(user);
+        exerciseRecord.setUsers(users);
         conductExerciseRecords.forEach(exerciseRecord::addConductExerciseRecord);
         return exerciseRecord;
     }

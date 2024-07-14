@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class User {
+public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,30 +35,30 @@ public class User {
     private Integer weight;
     private String gender;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "users")
     private List<ExercisePlan> plans = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "users")
     private List<ExerciseRecord> exerciseRecords = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "users")
     private List<Board> boards = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "users")
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "users")
     private List<Like> likes = new ArrayList<>();
 
-    public static User createUser(UserInfoDTO userInfoDTO) {
-        User user = new User();
-        user.setUsername(userInfoDTO.getUsername());
-        user.setPassword(userInfoDTO.getPassword());
-        user.setNickname(user.getNickname());
-        user.setBirth(userInfoDTO.getBirth());
-        user.setHeight(userInfoDTO.getHeight());
-        user.setWeight(userInfoDTO.getWeight());
-        user.setGender(userInfoDTO.getGender());
-        return user;
+    public static Users createUser(UserInfoDTO userInfoDTO) {
+        Users users = new Users();
+        users.setUsername(userInfoDTO.getUsername());
+        users.setPassword(userInfoDTO.getPassword());
+        users.setNickname(userInfoDTO.getNickname());
+        users.setBirth(userInfoDTO.getBirth());
+        users.setHeight(userInfoDTO.getHeight());
+        users.setWeight(userInfoDTO.getWeight());
+        users.setGender(userInfoDTO.getGender());
+        return users;
     }
 }

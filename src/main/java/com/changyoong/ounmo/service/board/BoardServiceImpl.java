@@ -2,7 +2,7 @@ package com.changyoong.ounmo.service.board;
 
 import com.changyoong.ounmo.domain.board.Board;
 import com.changyoong.ounmo.domain.board.File;
-import com.changyoong.ounmo.domain.user.User;
+import com.changyoong.ounmo.domain.user.Users;
 import com.changyoong.ounmo.dto.board.BoardDTO;
 import com.changyoong.ounmo.mapper.BoardMapper;
 import com.changyoong.ounmo.repository.board.BoardRepository;
@@ -40,9 +40,9 @@ public class BoardServiceImpl implements BoardService {
     public Long saveBoard(BoardDTO boardDTO, String email) {
         Board board = Board.createBoard(boardDTO.getTitle(), boardDTO.getContent());
         boardDTO.getFilePaths().forEach(filePath -> board.addFile(File.createFile(filePath)));
-        User user = userRepository.findByEmail(email)
+        Users users = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("user doesn't exist"));
-        board.setUser(user);
+        board.setUsers(users);
         Long saveId = boardRepository.save(board).getId();
         fileRepository.saveAll(board.getFiles());
         return saveId;

@@ -1,6 +1,6 @@
 package com.changyoong.ounmo.service.user;
 
-import com.changyoong.ounmo.domain.user.User;
+import com.changyoong.ounmo.domain.user.Users;
 import com.changyoong.ounmo.dto.user.UserInfoDTO;
 import com.changyoong.ounmo.mapper.UserMapper;
 import com.changyoong.ounmo.repository.user.UserRepository;
@@ -19,41 +19,41 @@ public class UserServiceImpl implements UserService {
     @Override
     public Long saveUser(UserInfoDTO userInfoDTO, String email) {
         validateDuplicateUser(userInfoDTO);
-        User user = User.createUser(userInfoDTO);
-        user.setEmail(email);
-        return userRepository.save(user).getId();
+        Users users = Users.createUser(userInfoDTO);
+        users.setEmail(email);
+        return userRepository.save(users).getId();
     }
 
     @Override
     public UserInfoDTO findUserById(Long userId) {
-        User user = userRepository.findById(userId)
+        Users users = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("user doesn't exist"));
-        return UserMapper.INSTANCE.toUserInfoDTO(user);
+        return UserMapper.INSTANCE.toUserInfoDTO(users);
     }
 
     @Override
     public UserInfoDTO findUserByEmail(String email) {
-        User user = userRepository.findByEmail(email)
+        Users users = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("user doesn't exist"));
-        return UserMapper.INSTANCE.toUserInfoDTO(user);
+        return UserMapper.INSTANCE.toUserInfoDTO(users);
     }
 
     @Override
     public UserInfoDTO findUserByUsername(String username) {
-        User user = userRepository.findByUsername(username)
+        Users users = userRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("user doesn't exist"));
-        return UserMapper.INSTANCE.toUserInfoDTO(user);
+        return UserMapper.INSTANCE.toUserInfoDTO(users);
     }
 
     @Override
     public String login(String username, String userPw) {
-        User findUser = userRepository.findUserByUsernameAndPassword(username, userPw)
+        Users findUsers = userRepository.findUserByUsernameAndPassword(username, userPw)
                 .orElseThrow(() -> new IllegalStateException("아이디가 존재하지 않거나 비밀번호가 일치하지 않음"));
-        return findUser.getId() + findUser.getUsername();
+        return findUsers.getId() + findUsers.getUsername();
     }
 
     private void validateDuplicateUser(UserInfoDTO userInfoDTO) {
-        Optional<User> findUser = userRepository.findByUsername(userInfoDTO.getUsername());
+        Optional<Users> findUser = userRepository.findByUsername(userInfoDTO.getUsername());
         if (findUser.isPresent()) {
             throw new IllegalStateException("중복된 회원 정보");
         }

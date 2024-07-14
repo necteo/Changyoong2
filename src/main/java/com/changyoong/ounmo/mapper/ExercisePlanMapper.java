@@ -32,7 +32,7 @@ public interface ExercisePlanMapper {
                 .id(exercisePlan.getId())
                 .startTime(exercisePlan.getStartTime())
                 .endTime(exercisePlan.getEndTime())
-                .userId(exercisePlan.getUser().getId())
+                .userId(exercisePlan.getUsers().getId())
                 .details(exercisePlan.getDetails())
                 .plannedExerciseDTOList(plannedExerciseDTOList)
                 .build();

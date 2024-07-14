@@ -1,7 +1,7 @@
 package com.changyoong.ounmo.service.exercise;
 
 import com.changyoong.ounmo.domain.exercise.*;
-import com.changyoong.ounmo.domain.user.User;
+import com.changyoong.ounmo.domain.user.Users;
 import com.changyoong.ounmo.dto.exericse.ExerciseDTO;
 import com.changyoong.ounmo.dto.exericse.ExercisePlanDTO;
 import com.changyoong.ounmo.dto.exericse.PlannedExerciseDTO;
@@ -42,7 +42,7 @@ public class ExercisePlanServiceImpl implements ExercisePlanService {
 
     @Override
     public Long savePlan(ExercisePlanDTO planDTO, String email) {
-        User user = userRepository.findByEmail(email)
+        Users users = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("user doesn't exist"));
 
         List<PlannedExercise> plannedExercises = new ArrayList<>();
@@ -52,7 +52,7 @@ public class ExercisePlanServiceImpl implements ExercisePlanService {
             plannedExercises.add(PlannedExercise.create(exercise, ped.getSets(), ped.getCount()));
         }
 
-        ExercisePlan exercisePlan = ExercisePlan.createPlan(user, plannedExercises,
+        ExercisePlan exercisePlan = ExercisePlan.createPlan(users, plannedExercises,
                 planDTO.getStartTime(), planDTO.getEndTime(), planDTO.getDetails());
         exercisePlanRepository.save(exercisePlan);
         plannedExerciseRepository.saveAll(plannedExercises);
